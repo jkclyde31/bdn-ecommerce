@@ -107,7 +107,7 @@ const CategoryList = async () => {
     const cats = sampleCategories;
   
     return (
-      <div className="px-4 overflow-x-scroll scrollbar-hide">
+      <div className="px-4 overflow-x-auto scrollbar-hide">
         <div className="flex gap-4 md:gap-8" style={{ minWidth: `${cats.items.length * 250}px` }}>
           {cats.items.map((item) => (
             <Link
