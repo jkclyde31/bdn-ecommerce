@@ -26,7 +26,7 @@ const SinglePage = () => {
           <div className="h-[2px] bg-gray-100" />
 
           <CutomizedProduct/>
-          <Add/>
+          <Add productId="1" variantId="1" stockNumber={1}/>
 
           <div className="h-[2px] bg-gray-100" />
 
