@@ -1,19 +1,19 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const Filter = () => {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
   const { replace } = useRouter();
 
   const handleFilterChange = (
     e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
   ) => {
     const { name, value } = e.target;
-    const params = new URLSearchParams(searchParams);
-    params.set(name, value);
-    replace(`${pathname}?${params.toString()}`);
+    // const params = new URLSearchParams(searchParams);
+    // params.set(name, value);
+    // replace(`${pathname}?${params.toString()}`);
   };
 
   return (
