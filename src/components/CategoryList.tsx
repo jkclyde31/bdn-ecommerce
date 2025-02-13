@@ -103,7 +103,7 @@ const sampleCategories = {
   ]
 };
 
-const CategoryList = async () => {
+const CategoryList =  () => {
     const cats = sampleCategories;
   
     return (

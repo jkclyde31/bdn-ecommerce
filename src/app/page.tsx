@@ -1,8 +1,25 @@
+"use client"
+
 import ProductList from "@/components/ProductList"
 import Slider from "@/components/Slider"
 import CategoryList from "@/components/CategoryList"
+import { useContext, useEffect } from "react"
+import { WixClientContext } from "@/context/wixContext"
 
 const HomePage = () => {
+
+  const wixClient = useContext(WixClientContext)
+
+  useEffect(()=>{
+    const getProducts = async () =>{
+      const res = await wixClient.products.queryProducts().find();
+      console.log("RESULTsss: ", res)
+    }
+    getProducts();
+  
+  }, [wixClient])
+
+
   return (
     <div className=''>
       <Slider/>
