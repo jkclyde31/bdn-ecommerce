@@ -16,6 +16,7 @@ const CustomizeProducts = ({
   const [selectedOptions, setSelectedOptions] = useState<{
     [key: string]: string;
   }>({});
+
   const [selectedVariant, setSelectedVariant] = useState<products.Variant>();
 
   useEffect(() => {
@@ -33,6 +34,8 @@ const CustomizeProducts = ({
     setSelectedOptions((prev) => ({ ...prev, [optionType]: choice }));
   };
 
+
+  // Availability Condition
   const isVariantInStock = (choices: { [key: string]: string }) => {
     return variants.some((variant) => {
       const variantChoices = variant.choices;
