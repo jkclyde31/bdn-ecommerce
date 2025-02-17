@@ -18,7 +18,13 @@ const nextConfig = {
           protocol: "https",
           hostname: "app-uploads-cdn.fera.ai",
         },
+        {
+          protocol: "https",
+          hostname: "lh3.googleusercontent.com'",
+        },
       ],
+      domains: ['lh3.googleusercontent.com'],
+
     },
   };
   

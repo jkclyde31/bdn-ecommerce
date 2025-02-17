@@ -8,41 +8,57 @@ import CartModal from "./CartModal";
 import { useWixClient } from "../../hooks/useWixClient";
 import Cookies from "js-cookie";
 import { useCartStore } from "../../hooks/useCartStore";
-import { WixClientContext } from "@/context/wixContext";
 
 const NavIcons = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [profilePicture, setProfilePicture] = useState("/profile.png"); // Default profile picture
 
   const router = useRouter();
-  const pathName = usePathname();
-
   const wixClient = useWixClient();
-  // const isLoggedIn = wixClient.auth.loggedIn();
 
-  const handleProfile = () => {
+  // Add user data fetching
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch('/api/users');
+        const data = await response.json();
+        console.log("DATA : ", data)
+        
+        if (data.user) {
+          setUserData(data.user);
+          // Update profile picture if user has one
+          if (data.user.member.profile.photo.url) {
+            setProfilePicture(data.user.member.profile.photo.url);
+          }
+      
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  console.log("Profile Picture : " , profilePicture)
+
+  const login = async () => {
     if (!wixClient.auth.loggedIn()) {
-      router.push("/login");
+      const loginRequestData = wixClient.auth.generateOAuthData(
+        "http://localhost:3000"
+      );
+
+      console.log(loginRequestData);
+
+      localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData));
+      const { authUrl } = await wixClient.auth.getAuthUrl(loginRequestData);
+      window.location.href = authUrl;
     } else {
       setIsProfileOpen((prev) => !prev);
     }
-  };
-
-  const login = async () => {
-   if(!wixClient.auth.loggedIn()){
-    const loginRequestData = wixClient.auth.generateOAuthData(
-      "http://localhost:3000"
-    );
-
-    console.log(loginRequestData);
-
-    localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData));
-    const { authUrl } = await wixClient.auth.getAuthUrl(loginRequestData);
-    window.location.href = authUrl;
-   }else{
-    setIsProfileOpen((prev) => !prev);
-   }
   };
 
   const handleLogout = async () => {
@@ -51,6 +67,8 @@ const NavIcons = () => {
     const { logoutUrl } = await wixClient.auth.logout(window.location.href);
     setIsLoading(false);
     setIsProfileOpen(false);
+    setUserData(null); // Clear user data on logout
+    setProfilePicture("/profile.png"); // Reset profile picture
     router.push(logoutUrl);
   };
 
@@ -80,11 +98,20 @@ const NavIcons = () => {
             parsedOAuthData
           );
 
-          // Update tokens in the Wix client
           wixClient.updateTokens({
             refreshToken: memberTokens.refreshToken,
             accessToken: memberTokens.accessToken,
           });
+
+          // Fetch user data after successful authentication
+          const response = await fetch('/api/user');
+          const data = await response.json();
+          if (data.user) {
+            setUserData(data.user);
+            if (data.user.profile?.photo?.url) {
+              setProfilePicture(data.user.profile.photo.url);
+            }
+          }
 
           console.log("Authentication successful!");
         } catch (error) {
@@ -99,15 +126,16 @@ const NavIcons = () => {
   return (
     <div className="flex items-center gap-4 xl:gap-6 relative">
       <Image
-        src="/profile.png"
+        src={profilePicture}
         alt=""
         width={22}
         height={22}
-        className="cursor-pointer"
+        className="cursor-pointer rounded-full"
         onClick={login}
       />
       {isProfileOpen && (
         <div className="absolute p-4 rounded-md top-12 left-0 bg-white text-sm shadow-[0_3px_10px_rgb(0,0,0,0.2)] z-20">
+          {/* {userData && <div className="mb-2">{userData.profile?.nickname || userData.profile?.name || 'User'}</div>} */}
           <Link href="/profile">Profile</Link>
           <div className="mt-2 cursor-pointer" onClick={handleLogout}>
             {isLoading ? "Logging out" : "Logout"}
