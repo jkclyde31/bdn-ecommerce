@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import CartModal from "./CartModal";
 import { useWixClient } from "../../hooks/useWixClient";
@@ -10,33 +10,49 @@ import Cookies from "js-cookie";
 import { useCartStore } from "../../hooks/useCartStore";
 import { Toast } from "./Toast";
 
+// Define the UserData type
+interface MemberProfile {
+  nickname?: string;
+  name?: string;
+  photo?: {
+    url?: string;
+  };
+}
+
+interface UserData {
+  member?: {
+    profile?: MemberProfile;
+  };
+}
+
 const NavIcons = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState<UserData | null>(null); // Apply the type here
   const [profilePicture, setProfilePicture] = useState("/profile.png"); 
   const [showToast, setShowToast] = useState(false);
 
   const router = useRouter();
   const wixClient = useWixClient();
 
-  // Add user data fetching
+  // Fetch user data
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const response = await fetch('/api/users');
         const data = await response.json();
-        console.log("DATA : ", data)
-        
-        if (data.user) {
+        console.log("USER DATA: ", data);
+
+        if (data?.user) {
           setUserData(data.user);
           // Update profile picture if user has one
-          if (data.user.member.profile.photo.url) {
+          if (data.user?.member?.profile?.photo?.url) {
             setProfilePicture(data.user.member.profile.photo.url);
           }
           setShowToast(true);
-      
+        } else {
+          console.log("No user data found.");
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -46,15 +62,11 @@ const NavIcons = () => {
     fetchUser();
   }, []);
 
-  console.log("Profile Picture : " , profilePicture)
-
   const login = async () => {
     if (!wixClient.auth.loggedIn()) {
       const loginRequestData = wixClient.auth.generateOAuthData(
         "http://localhost:3000"
       );
-
-      console.log(loginRequestData);
 
       localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData));
       const { authUrl } = await wixClient.auth.getAuthUrl(loginRequestData);
@@ -109,9 +121,9 @@ const NavIcons = () => {
           // Fetch user data after successful authentication
           const response = await fetch('/api/user');
           const data = await response.json();
-          if (data.user) {
+          if (data?.user) {
             setUserData(data.user);
-            if (data.user.profile?.photo?.url) {
+            if (data.user?.profile?.photo?.url) {
               setProfilePicture(data.user.profile.photo.url);
             }
           }
@@ -138,7 +150,13 @@ const NavIcons = () => {
       />
       {isProfileOpen && (
         <div className="absolute p-4 rounded-md top-12 left-0 bg-white text-sm shadow-[0_3px_10px_rgb(0,0,0,0.2)] z-20">
-          {/* {userData && <div className="mb-2">{userData.profile?.nickname || userData.profile?.name || 'User'}</div>} */}
+          {userData ? (
+            <div className="mb-2">
+              {userData.member?.profile?.nickname || userData.member?.profile?.name || 'User'}
+            </div>
+          ) : (
+            <div className="mb-2">Guest</div>
+          )}
           <Link href="/profile">Profile</Link>
           <div className="mt-2 cursor-pointer" onClick={handleLogout}>
             {isLoading ? "Logging out" : "Logout"}
@@ -162,10 +180,9 @@ const NavIcons = () => {
         </div>
       </div>
       {isCartOpen && <CartModal />}
-      {showToast && (
+      {showToast && userData && (
         <Toast 
-          message={`Welcome back${userData?.member?.profile?.nickname ? `, ${userData.member.profile.nickname}` : ''}!`}
-         
+          message={`Welcome back${userData.member?.profile?.nickname ? `, ${userData.member.profile.nickname}` : ''}!`}
           onClose={() => setShowToast(false)}
         />
       )}
