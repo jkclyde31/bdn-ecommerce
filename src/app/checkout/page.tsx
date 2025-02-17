@@ -46,44 +46,6 @@ const CheckoutPage = () => {
 
     try {
       // Format the cart details for the message
-      const cartSummary = cart.lineItems
-        .map(
-          (item) =>
-            `${item.productName?.original} (Qty: ${item.quantity}) - $${item.price?.amount}`
-        )
-        .join("\n");
-
-      // Format the full message
-      const message = `
-        New Order Received! 🎉
-        ---------------------
-        **Order Details:**
-        ${cartSummary}
-        ---------------------
-        **Subtotal:** $${cart.subtotal?.amount}
-        **Payment Method:** Cash on Pickup
-        ---------------------
-        **Pickup Details:**
-        - Location: ${pickupDetails.preferredLocation}
-        - Contact: ${pickupDetails.contactNumber}
-        - Notes: ${pickupDetails.notes || "N/A"}
-      `;
-
-      // Send the message to Messenger
-      const response = await fetch("/api/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to send message");
-      }
-
-      // // Clear the cart after successful submission
-      // await clearCart(wixClient);
 
       alert("Message sent successfully!");
       router.push("/order-success"); // Redirect to a success page
