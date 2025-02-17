@@ -25,10 +25,24 @@ const ProfilePage = async () => {
       },
     });
 
+    console.log(user.member.profile?.photo?.url)
+    const profilePictureUrl = user.member?.profile?.photo?.url;
+
+
     return (
       <div className="flex flex-col md:flex-row gap-24 md:h-[calc(100vh-180px)] items-center px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
         <div className="w-full md:w-1/2">
           <h1 className="text-2xl">Profile</h1>
+          {/* Display the profile picture if it exists */}
+          {profilePictureUrl && (
+            <div className="mt-4">
+              <img
+                src={profilePictureUrl}
+                alt="Profile Picture"
+                className="w-24 h-24 rounded-full object-cover"
+              />
+            </div>
+          )}
           <form action={updateUser} className="mt-12 flex flex-col gap-4">
             <input type="text" hidden name="id" value={user.member.contactId} />
             <label className="text-sm text-gray-700">Username</label>
