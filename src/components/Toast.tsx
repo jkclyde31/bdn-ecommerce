@@ -19,7 +19,7 @@ export const Toast: React.FC<ToastProps> = ({ message, onClose }) => {
 
   return (
     <div
-      className={`fixed top-4 right-4 bg-lama text-white px-6 py-3 rounded-lg shadow-lg transform transition-transform duration-300 ease-in-out ${
+      className={`fixed z-50 top-20 right-4 bg-lama text-white px-6 py-3 rounded-lg shadow-lg transform transition-transform duration-300 ease-in-out ${
         isVisible ? 'animate-slideIn' : 'animate-slideOut'
       }`}
     >
