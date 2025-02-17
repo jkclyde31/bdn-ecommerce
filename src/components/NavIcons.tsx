@@ -8,13 +8,15 @@ import CartModal from "./CartModal";
 import { useWixClient } from "../../hooks/useWixClient";
 import Cookies from "js-cookie";
 import { useCartStore } from "../../hooks/useCartStore";
+import { Toast } from "./Toast";
 
 const NavIcons = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [profilePicture, setProfilePicture] = useState("/profile.png"); // Default profile picture
+  const [profilePicture, setProfilePicture] = useState("/profile.png"); 
+  const [showToast, setShowToast] = useState(false);
 
   const router = useRouter();
   const wixClient = useWixClient();
@@ -33,6 +35,7 @@ const NavIcons = () => {
           if (data.user.member.profile.photo.url) {
             setProfilePicture(data.user.member.profile.photo.url);
           }
+          setShowToast(true);
       
         }
       } catch (error) {
@@ -159,6 +162,13 @@ const NavIcons = () => {
         </div>
       </div>
       {isCartOpen && <CartModal />}
+      {showToast && (
+        <Toast 
+          message={`Welcome back${userData?.member?.profile?.nickname ? `, ${userData.member.profile.nickname}` : ''}!`}
+         
+          onClose={() => setShowToast(false)}
+        />
+      )}
     </div>
   );
 };
