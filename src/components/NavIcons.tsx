@@ -5,10 +5,8 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import CartModal from "./CartModal";
-// import { useWixClient } from "@/hooks/useWixClient";
 import { useWixClient } from "../../hooks/useWixClient";
 import Cookies from "js-cookie";
-// import { useCartStore } from "@/hooks/useCartStore";
 import { useCartStore } from "../../hooks/useCartStore";
 
 const NavIcons = () => {
@@ -37,17 +35,17 @@ const NavIcons = () => {
 
   // const wixClient = useWixClient();
 
-  // const login = async () => {
-  //   const loginRequestData = wixClient.auth.generateOAuthData(
-  //     "http://localhost:3000"
-  //   );
+  const login = async () => {
+    const loginRequestData = wixClient.auth.generateOAuthData(
+      "http://localhost:3000"
+    );
 
-  //   console.log(loginRequestData);
+    console.log(loginRequestData);
 
-  //   localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData));
-  //   const { authUrl } = await wixClient.auth.getAuthUrl(loginRequestData);
-  //   window.location.href = authUrl;
-  // };
+    localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData));
+    const { authUrl } = await wixClient.auth.getAuthUrl(loginRequestData);
+    window.location.href = authUrl;
+  };
 
   const handleLogout = async () => {
     setIsLoading(true);
