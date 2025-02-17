@@ -19,10 +19,10 @@ const NavIcons = () => {
   const pathName = usePathname();
 
   const wixClient = useWixClient();
-  const isLoggedIn = wixClient.auth.loggedIn();
+  // const isLoggedIn = wixClient.auth.loggedIn();
 
   const handleProfile = () => {
-    if (!isLoggedIn) {
+    if (!wixClient.auth.loggedIn()) {
       router.push("/login");
     } else {
       setIsProfileOpen((prev) => !prev);
@@ -30,7 +30,7 @@ const NavIcons = () => {
   };
 
   const login = async () => {
-   if(!isLoggedIn){
+   if(!wixClient.auth.loggedIn()){
     const loginRequestData = wixClient.auth.generateOAuthData(
       "http://localhost:3000"
     );
