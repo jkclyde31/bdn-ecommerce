@@ -1,6 +1,5 @@
 "use client";
 
-// import { useWixClient } from "@/hooks/useWixClient";
 import { useWixClient } from "../../../hooks/useWixClient";
 import { LoginState } from "@wix/sdk";
 import { useRouter } from "next/navigation";
@@ -52,8 +51,6 @@ const LoginPage = () => {
       ? "Reset"
       : "Verify";
 
-
-  // Submit Functionality 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);

@@ -8,6 +8,7 @@ import CartModal from "./CartModal";
 import { useWixClient } from "../../hooks/useWixClient";
 import Cookies from "js-cookie";
 import { useCartStore } from "../../hooks/useCartStore";
+import { WixClientContext } from "@/context/wixContext";
 
 const NavIcons = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -20,9 +21,6 @@ const NavIcons = () => {
   const wixClient = useWixClient();
   const isLoggedIn = wixClient.auth.loggedIn();
 
-  // TEMPORARY
-  // const isLoggedIn = false;
-
   const handleProfile = () => {
     if (!isLoggedIn) {
       router.push("/login");
@@ -31,11 +29,8 @@ const NavIcons = () => {
     }
   };
 
-  // AUTH WITH WIX-MANAGED AUTH
-
-  // const wixClient = useWixClient();
-
   const login = async () => {
+   if(!isLoggedIn){
     const loginRequestData = wixClient.auth.generateOAuthData(
       "http://localhost:3000"
     );
@@ -45,6 +40,9 @@ const NavIcons = () => {
     localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData));
     const { authUrl } = await wixClient.auth.getAuthUrl(loginRequestData);
     window.location.href = authUrl;
+   }else{
+    setIsProfileOpen((prev) => !prev);
+   }
   };
 
   const handleLogout = async () => {
@@ -56,12 +54,47 @@ const NavIcons = () => {
     router.push(logoutUrl);
   };
 
-
   const { cart, counter, getCart } = useCartStore();
 
   useEffect(() => {
     getCart(wixClient);
   }, [wixClient, getCart]);
+
+  useEffect(() => {
+    const handleOAuthCallback = async () => {
+      const oAuthRedirectData = localStorage.getItem("oAuthRedirectData");
+
+      if (oAuthRedirectData) {
+        const parsedOAuthData = JSON.parse(oAuthRedirectData);
+        const returnedOAuthData = wixClient.auth.parseFromUrl();
+
+        if (returnedOAuthData.error) {
+          console.error(`Error: ${returnedOAuthData.errorDescription}`);
+          return;
+        }
+
+        try {
+          const memberTokens = await wixClient.auth.getMemberTokens(
+            returnedOAuthData.code,
+            returnedOAuthData.state,
+            parsedOAuthData
+          );
+
+          // Update tokens in the Wix client
+          wixClient.updateTokens({
+            refreshToken: memberTokens.refreshToken,
+            accessToken: memberTokens.accessToken,
+          });
+
+          console.log("Authentication successful!");
+        } catch (error) {
+          console.error("Failed to get member tokens:", error);
+        }
+      }
+    };
+
+    handleOAuthCallback();
+  }, [wixClient]);
 
   return (
     <div className="flex items-center gap-4 xl:gap-6 relative">
@@ -71,8 +104,7 @@ const NavIcons = () => {
         width={22}
         height={22}
         className="cursor-pointer"
-        // onClick={login}
-        onClick={handleProfile}
+        onClick={login}
       />
       {isProfileOpen && (
         <div className="absolute p-4 rounded-md top-12 left-0 bg-white text-sm shadow-[0_3px_10px_rgb(0,0,0,0.2)] z-20">
