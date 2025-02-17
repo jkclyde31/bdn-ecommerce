@@ -22,7 +22,7 @@ const PICKUP_LOCATIONS = [
 const CheckoutPage = () => {
   const router = useRouter();
   const wixClient = useWixClient();
-  const { cart, clearCart } = useCartStore();
+  const { cart } = useCartStore();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [pickupDetails, setPickupDetails] = useState<PickupDetails>({
     preferredLocation: "",
@@ -82,8 +82,8 @@ const CheckoutPage = () => {
         throw new Error("Failed to send message");
       }
 
-      // Clear the cart after successful submission
-      await clearCart(wixClient);
+      // // Clear the cart after successful submission
+      // await clearCart(wixClient);
 
       alert("Message sent successfully!");
       router.push("/order-success"); // Redirect to a success page
