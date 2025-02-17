@@ -54,7 +54,7 @@ const ProductList = async ({
       {res.items.map((product: products.Product) => (
         <Link
           href={"/" + product.slug}
-          className="w-full flex flex-col gap-3 md:gap-4 sm:w-[45%] lg:w-[22%]"
+          className="w-full flex flex-col gap-[5px] md:gap-4 sm:w-[45%] lg:w-[22%]"
           key={product._id}
         >
           <div className="relative w-full h-80">
@@ -75,7 +75,7 @@ const ProductList = async ({
               />
             )}
           </div>
-          <div className="flex justify-between mt-[5px] md:mt-0">
+          <div className="flex justify-between mt-[10px] md:mt-0 px-[10px] md:px-0">
             <span className="font-medium">{product.name}</span>
             <span className="font-semibold">₱{product.price?.price}</span>
           </div>
@@ -91,9 +91,12 @@ const ProductList = async ({
               }}
             ></div>
           )}
-          <button className="rounded-2xl ring-1 ring-lama text-lama w-max py-2 px-4 text-xs hover:bg-lama hover:text-white">
-            Add to Cart
-          </button>
+          <div className="px-[5px] md:px-0">
+            <button className="rounded-2xl ring-1 ring-lama text-lama w-max py-2 px-4 text-xs hover:bg-lama hover:text-white ">
+              Add to Cart
+            </button>
+          </div>
+        
         </Link>
       ))}
       {searchParams?.cat || searchParams?.name ? (
