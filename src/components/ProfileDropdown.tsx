@@ -54,7 +54,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
   return (
     <div 
       ref={dropdownRef}
-      className="absolute min-w-[200px] p-4 rounded-lg top-12 left-0 bg-white shadow-lg z-20 border border-gray-100"
+      className="absolute min-w-[200px] p-4 rounded-lg top-12 -right-9 md:left-0 bg-white shadow-lg z-20 border border-gray-100"
     >
       <div className="space-y-3">
         {/* User Info */}
