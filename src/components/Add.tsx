@@ -53,23 +53,31 @@ const Add = ({
               +
             </button>
           </div>
-          {stockNumber < 1 ? (
+         
+        </div>
+
+        {stockNumber < 1 ? (
             <div className="text-xs">Product is out of stock</div>
           ) : (
             <div className="text-xs">
-              Only <span className="text-orange-500">{stockNumber} items</span>{" "}
-              left!
-              <br /> {"Don't"} miss it
-            </div>
-          )}
-        </div>
-        <button
+               <button
           onClick={() => addItem(wixClient, productId, variantId, quantity)}
           disabled={isLoading}
           className="w-36 text-sm rounded-3xl ring-1 ring-lama text-lama py-2 px-4 hover:bg-lama hover:text-white disabled:cursor-not-allowed disabled:bg-pink-200 disabled:ring-0 disabled:text-white disabled:ring-none"
         >
           Add to Cart
         </button>
+            </div>
+          )}
+
+{/*           
+        <button
+          onClick={() => addItem(wixClient, productId, variantId, quantity)}
+          disabled={isLoading}
+          className="w-36 text-sm rounded-3xl ring-1 ring-lama text-lama py-2 px-4 hover:bg-lama hover:text-white disabled:cursor-not-allowed disabled:bg-pink-200 disabled:ring-0 disabled:text-white disabled:ring-none"
+        >
+          Add to Cart
+        </button> */}
       </div>
     </div>
   );
