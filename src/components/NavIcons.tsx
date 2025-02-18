@@ -149,8 +149,8 @@ const NavIcons = () => {
       <Image
         src={profilePicture}
         alt="Profile"
-        width={22}
-        height={22}
+        width={26}
+        height={26}
         className="cursor-pointer rounded-full"
         onClick={login}
       />
