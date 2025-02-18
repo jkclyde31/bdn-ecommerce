@@ -9,6 +9,7 @@ import { useWixClient } from "../../hooks/useWixClient";
 import Cookies from "js-cookie";
 import { useCartStore } from "../../hooks/useCartStore";
 import { Toast } from "./Toast";
+import ProfileDropdown from "./ProfileDropdown";
 
 // Define the UserData type
 interface MemberProfile {
@@ -33,6 +34,7 @@ const NavIcons = () => {
   const [userData, setUserData] = useState<UserData | null>(null); // Stores user data
   const [profilePicture, setProfilePicture] = useState("/profile.png"); // Stores profile picture URL
   const [showToast, setShowToast] = useState(false); // Controls toast visibility
+  
 
   const router = useRouter();
   const wixClient = useWixClient();
@@ -156,19 +158,27 @@ const NavIcons = () => {
       />
       {/* Profile Dropdown */}
       {isProfileOpen && (
-        <div className="absolute p-4 rounded-md top-12 left-0 bg-white text-sm shadow-[0_3px_10px_rgb(0,0,0,0.2)] z-20">
-          {userData ? (
-            <div className="mb-2">
-              {userData.member?.profile?.nickname || userData.member?.profile?.name || 'User'}
-            </div>
-          ) : (
-            <div className="mb-2">Guest</div>
-          )}
-          <Link href="/profile">Profile</Link>
-          <div className="mt-2 cursor-pointer" onClick={handleLogout}>
-            {isLoading ? "Logging out" : "Logout"}
-          </div>
-        </div>
+        // <div className="absolute p-4 rounded-md top-12 left-0 bg-white text-sm shadow-[0_3px_10px_rgb(0,0,0,0.2)] z-20">
+        //   {userData ? (
+        //     <div className="mb-2">
+        //       {userData.member?.profile?.nickname || userData.member?.profile?.name || 'User'}
+        //     </div>
+        //   ) : (
+        //     <div className="mb-2">Guest</div>
+        //   )}
+        //   <Link href="/profile">Profile</Link>
+        //   <div className="mt-2 cursor-pointer" onClick={handleLogout}>
+        //     {isLoading ? "Logging out" : "Logout"}
+        //   </div>
+        // </div>
+        <ProfileDropdown
+          isProfileOpen={isProfileOpen}
+          userData={userData}
+          handleLogout={handleLogout}
+          isLoading={isLoading}
+          onClose={() => setIsProfileOpen(false)}
+
+        />
       )}
 
       {/* Notification Icon */}

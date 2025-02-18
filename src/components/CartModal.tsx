@@ -44,7 +44,7 @@ const CartModal = ({ isOpen, onClose }: CartModalProps) => {
       <div className="fixed inset-0 bg-black bg-opacity-25" onClick={onClose} />
       <div 
         ref={modalRef}
-        className="w-max absolute p-4 rounded-md shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white top-12 right-2 md:right-0 flex flex-col gap-6 z-20"
+        className="w-max absolute p-4 rounded-md shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white top-12 right-3 md:right-2 flex flex-col gap-6 z-20"
       >
         {!cart.lineItems ? (
           <div className="text-center py-4">Cart is Empty</div>
