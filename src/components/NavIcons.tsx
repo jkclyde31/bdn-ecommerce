@@ -192,7 +192,10 @@ const NavIcons = () => {
       </div>
 
       {/* Cart Modal */}
-      {isCartOpen && <CartModal />}
+      {isCartOpen && <CartModal 
+        isOpen={isCartOpen} 
+        onClose={() => setIsCartOpen(false)} 
+      />}
 
       {/* Welcome Toast */}
       {showToast && userData && (

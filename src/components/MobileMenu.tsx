@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from "react";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useWixClient } from "../../hooks/useWixClient";
+import CartModal from "./CartModal";
 
 interface MemberProfile {
   nickname?: string;
@@ -27,6 +28,8 @@ const MobileMenu = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [profilePicture, setProfilePicture] = useState("/profile.png");
   const [isLoading, setIsLoading] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false); // Controls cart modal visibility
+
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const wixClient = useWixClient();
@@ -146,6 +149,22 @@ const MobileMenu = () => {
             </div>
           )}
         </div>
+
+        <div
+            className="relative cursor-pointer"
+             onClick={() => setIsCartOpen((prev) => !prev)}
+        >
+            <Image src="/cart.png" alt="Cart" width={22} height={22} />
+            <div className="absolute -top-2 -right-2 w-3 h-3 bg-lama rounded-full text-white text-sm flex items-center justify-center"></div>
+        </div>
+
+        
+      {/* Cart Modal */}
+      {isCartOpen && <CartModal 
+        isOpen={isCartOpen} 
+        onClose={() => setIsCartOpen(false)} 
+        />}
+
         <Menu />
       </div>
     </div>
