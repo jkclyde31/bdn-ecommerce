@@ -73,7 +73,7 @@ const NavIcons = () => {
       //   "http://localhost:3000"
       // );
       const loginRequestData = wixClient.auth.generateOAuthData(
-        "https://cly-ecommerce.vercel.app/"
+        "https://cly-ecommerce.vercel.app"
       );
       localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData));
       const { authUrl } = await wixClient.auth.getAuthUrl(loginRequestData);
