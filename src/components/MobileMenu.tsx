@@ -51,7 +51,7 @@ const MobileMenu = () => {
   const login = async () => {
     if (!wixClient.auth.loggedIn()) {
       const loginRequestData = wixClient.auth.generateOAuthData(
-        "https://cly-ecommerce.vercel.app"
+        "https:localhost:3000"
       );
       localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData));
       const { authUrl } = await wixClient.auth.getAuthUrl(loginRequestData);

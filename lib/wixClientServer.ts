@@ -20,7 +20,7 @@ export const wixClientServer = async () => {
       members,
     },
     auth: OAuthStrategy({
-      clientId: "0abf4b01-6cfb-4872-a391-88a92d3d67c5",
+      clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID!,
       tokens: {
         refreshToken,
         accessToken: { value: "", expiresAt: 0 },
