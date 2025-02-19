@@ -2,9 +2,20 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useKeenSlider, KeenSliderInstance } from 'keen-slider/react'
+import "keen-slider/keen-slider.min.css";
+import { useState } from "react";
 
-const slides = [
+interface Slide {
+  id: number;
+  title: string;
+  description: string;
+  img: string;
+  url: string;
+  bg: string;
+}
+
+const slides: Slide[] = [
   {
     id: 1,
     title: "Summer Sale Collections",
@@ -32,25 +43,66 @@ const slides = [
 ];
 
 const Slider = () => {
-  const [current, setCurrent] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
+  const [loaded, setLoaded] = useState<boolean>(false);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-    }, 6000);
-
-    return () => clearInterval(interval);
-  }, []);
+  const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>(
+    {
+      initial: 0,
+      slideChanged(slider: KeenSliderInstance) {
+        setCurrentSlide(slider.track.details.rel);
+      },
+      created(slider: KeenSliderInstance) {
+        setLoaded(true);
+      },
+      loop: true,
+      drag: true,
+      slides: {
+        spacing: 0,
+        perView: 1,
+      },
+    },
+    [
+      (slider: KeenSliderInstance) => {
+        let timeout: ReturnType<typeof setTimeout>;
+        let mouseOver = false;
+        
+        function clearNextTimeout() {
+          clearTimeout(timeout);
+        }
+        
+        function nextTimeout() {
+          clearTimeout(timeout);
+          if (mouseOver) return;
+          timeout = setTimeout(() => {
+            slider.next();
+          }, 6000);
+        }
+        
+        slider.on("created", () => {
+          slider.container.addEventListener("mouseover", () => {
+            mouseOver = true;
+            clearNextTimeout();
+          });
+          slider.container.addEventListener("mouseout", () => {
+            mouseOver = false;
+            nextTimeout();
+          });
+          nextTimeout();
+        });
+        slider.on("dragStarted", clearNextTimeout);
+        slider.on("animationEnded", nextTimeout);
+        slider.on("updated", nextTimeout);
+      },
+    ]
+  );
 
   return (
-    <div className="h-[calc(100vh-80px)] overflow-hidden">
-      <div
-        className="w-max h-full flex transition-all ease-in-out duration-1000"
-        style={{ transform: `translateX(-${current * 100}vw)` }}
-      >
+    <div className="h-[calc(100vh-80px)] relative">
+      <div ref={sliderRef} className="keen-slider h-full">
         {slides.map((slide) => (
           <div
-            className={`${slide.bg} w-screen h-full flex flex-col gap-16 xl:flex-row`}
+            className={`keen-slider__slide ${slide.bg} h-full flex flex-col gap-16 xl:flex-row`}
             key={slide.id}
           >
             {/* TEXT CONTAINER */}
@@ -62,7 +114,7 @@ const Slider = () => {
                 {slide.title}
               </h1>
               <Link href={slide.url}>
-                <button className="rounded-md bg-black text-white py-3 px-4 ">
+                <button className="rounded-md bg-black text-white py-3 px-4">
                   SHOP NOW
                 </button>
               </Link>
@@ -71,7 +123,7 @@ const Slider = () => {
             <div className="h-1/2 xl:w-1/2 xl:h-full relative">
               <Image
                 src={slide.img}
-                alt=""
+                alt={slide.title}
                 fill
                 sizes="100%"
                 className="object-cover"
@@ -80,21 +132,24 @@ const Slider = () => {
           </div>
         ))}
       </div>
-      <div className="absolute m-auto left-[39%] sm:left-1/2 bottom-8 flex gap-4">
-        {slides.map((slide, index) => (
-          <div
-            className={`w-3 h-3  rounded-full ring-1 ring-white sm:ring-gray-600 cursor-pointer flex items-center justify-center ${
-              current === index ? "scale-150" : ""
-            }`}
-            key={slide.id}
-            onClick={() => setCurrent(index)}
-          >
-            {current === index && (
-              <div className="w-[6px] h-[6px] bg-white sm:bg-gray-600 rounded-full"></div>
-            )}
-          </div>
-        ))}
-      </div>
+
+      {loaded && instanceRef.current && (
+        <div className="absolute m-auto left-[39%] sm:left-1/2 bottom-8 flex gap-4">
+          {slides.map((slide, idx) => (
+            <div
+              key={slide.id}
+              className={`w-3 h-3 rounded-full ring-1 ring-white sm:ring-gray-600 cursor-pointer flex items-center justify-center ${
+                currentSlide === idx ? "scale-150" : ""
+              }`}
+              onClick={() => instanceRef.current?.moveToIdx(idx)}
+            >
+              {currentSlide === idx && (
+                <div className="w-[6px] h-[6px] bg-white sm:bg-gray-600 rounded-full" />
+              )}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
