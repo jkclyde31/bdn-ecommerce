@@ -73,7 +73,7 @@ const NavIcons = () => {
       //   "http://localhost:3000"
       // );
       const loginRequestData = wixClient.auth.generateOAuthData(
-        "http://localhost:3000"
+        "https://bdn-commerce.vercel.app"
       );
       localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData));
       const { authUrl } = await wixClient.auth.getAuthUrl(loginRequestData);
