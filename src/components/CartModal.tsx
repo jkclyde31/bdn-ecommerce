@@ -99,7 +99,7 @@ const CartModal = ({ isOpen, onClose }: CartModalProps) => {
                     <div className="flex justify-between text-sm">
                       <span className="text-gray-500">Qty. {item.quantity}</span>
                       <button
-                        className="text-blue-500 hover:text-blue-600 transition-colors disabled:opacity-50"
+                        className="text-red-500 hover:text-red-600 transition-colors disabled:opacity-50"
                         disabled={isLoading}
                         onClick={() => removeItem(wixClient, item._id!)}
                       >
@@ -123,7 +123,7 @@ const CartModal = ({ isOpen, onClose }: CartModalProps) => {
                   View Cart
                 </button>
                 <button
-                  className="rounded-md py-3 px-4 bg-black text-white hover:bg-gray-800 transition-colors disabled:cursor-not-allowed disabled:opacity-75"
+                  className="rounded-md py-3 px-4 bg-green-700 text-white hover:bg-green-800 transition-colors disabled:cursor-not-allowed disabled:opacity-75"
                   disabled={isLoading}
                   onClick={handleCheckout}
                 >
