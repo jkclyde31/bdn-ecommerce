@@ -29,13 +29,12 @@ const Navbar = () => {
             <Image src="/bdn-logo.png" alt="" width={50} height={50} />
             <div className="text-2xl tracking-wide">BDN Inc.</div>
           </Link>
-          <div className="hidden xl:flex gap-4">
+          {/* <div className="hidden xl:flex gap-4">
             <Link href="/">Home</Link>
             <Link href="/list">Shop</Link>
-            {/* <Link href="/">Deals</Link> */}
             <Link href="/">About</Link>
             <Link href="/">Contact</Link>
-          </div>
+          </div> */}
         </div>
         {/* RIGHT */}
         <div className="w-2/3 xl:w-1/2 flex items-center justify-between gap-8">

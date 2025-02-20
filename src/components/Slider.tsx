@@ -125,7 +125,7 @@ const Slider = () => {
 
   return (
     <div className="h-[calc(100vh-80px)] relative">
-      <div ref={sliderRef} className="keen-slider h-full">
+      <div ref={sliderRef} className={`keen-slider h-full ${!loaded ? 'opacity-0' : 'opacity-100'}`}>
         {slides.map((slide) => (
           <div
             className={`keen-slider__slide ${slide.bg} h-full flex flex-col gap-16 xl:flex-row`}
