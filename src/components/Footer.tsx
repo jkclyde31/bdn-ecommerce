@@ -1,101 +1,96 @@
-import Image from "next/image";
-import Link from "next/link";
+import React from 'react';
+import { Facebook, Instagram, Mail, Phone } from 'lucide-react';
+import Image from 'next/image';
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+  
   return (
-    <div className="py-[50px] px-4 md:px-8 lg:px-16 xl:32 2xl:px-64 bg-gray-100 text-sm mt-[50px]">
-      {/* TOP */}
-      <div className="flex flex-col md:flex-row justify-between gap-24">
-        {/* LEFT */}
-        <div className="w-full md:w-1/2 lg:w-1/2 flex flex-col gap-8">
-          <Link href="/">
-            <div className="text-2xl tracking-wide">BDN Inc.</div>
-          </Link>
-          <p>
-            3252 Shilan
-          </p>
-          <span className="font-semibold">bdn@gmail.dev</span>
-          <span className="font-semibold">0912-123-5435</span>
-          <div className="flex gap-6">
-            <Image src="/facebook.png" alt="" width={16} height={16} />
-            <Image src="/instagram.png" alt="" width={16} height={16} />
-            <Image src="/youtube.png" alt="" width={16} height={16} />
-            <Image src="/pinterest.png" alt="" width={16} height={16} />
-            <Image src="/x.png" alt="" width={16} height={16} />
+    <footer className="bg-green-900 text-gray-300 mt-[50px] md:mt-[100px]">
+      <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Brand Section */}
+        <div className="space-y-4 flex flex-col items-center md:items-start">
+          <div className="flex items-center gap-3">
+            <div className="w-15 h-15 bg-white rounded-full flex items-center justify-center">
+              <Image src="/bdn-logo.png" alt="BDN Inc. Logo" width={80} height={80} />
+            </div>
+            <span className="text-white text-xl font-bold">BDN Inc.</span>
+          </div>
+          <p className="text-sm text-center md:text-left">Your one-stop shop for quality products</p>
+        </div>
+
+        {/* Products Links */}
+        <div className="text-center md:text-left">
+          <h3 className="text-white font-semibold text-lg mb-4">Products</h3>
+          <ul className="space-y-3">
+            <li>
+              <a href="/browse" className="hover:text-white transition-colors">Browse Products</a>
+            </li>
+            <li>
+              <a href="/featured" className="hover:text-white transition-colors">Featured Products</a>
+            </li>
+            <li>
+              <a href="/new" className="hover:text-white transition-colors">New Products</a>
+            </li>
+          </ul>
+        </div>
+
+        {/* Contact Information */}
+        <div className="text-center md:text-left">
+          <h3 className="text-white font-semibold text-lg mb-4">Contact Us</h3>
+          <ul className="space-y-3">
+            <li className="flex items-center gap-2 justify-center md:justify-start">
+              <Mail size={18} />
+              <a href="mailto:bdn@estore.com" className="hover:text-white transition-colors">
+                bdn@estore.com
+              </a>
+            </li>
+            <li className="flex items-center gap-2 justify-center md:justify-start">
+              <Phone size={18} />
+              <a href="tel:+09124566789" className="hover:text-white transition-colors">
+                0912-456-6789
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        {/* Social Links */}
+        <div className="text-center md:text-left">
+          <h3 className="text-white font-semibold text-lg mb-4">Follow Us</h3>
+          <div className="flex gap-4 justify-center md:justify-start">
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors"
+            >
+              <Facebook size={24} />
+            </a>
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white transition-colors"
+            >
+              <Instagram size={24} />
+            </a>
+            <a
+              href="mailto:bdn@estore.com"
+              className="hover:text-white transition-colors"
+            >
+              <Mail size={24} />
+            </a>
           </div>
         </div>
-        {/* CENTER */}
-        <div className="hidden lg:flex justify-between w-1/2">
-          {/* <div className="flex flex-col justify-between">
-            <h1 className="font-medium text-lg">COMPANY</h1>
-            <div className="flex flex-col gap-6">
-              <Link href="">About Us</Link>
-              <Link href="">Careers</Link>
-              <Link href="">Affiliates</Link>
-              <Link href="">Blog</Link>
-              <Link href="">Contact Us</Link>
-            </div>
-          </div> */}
-          <div className="flex flex-col justify-between">
-            <h1 className="font-medium text-lg">SHOP</h1>
-            <div className="flex flex-col gap-6">
-              <Link href="">Apparels</Link>
-              <Link href="">Bugs</Link>
-              <Link href="">Notebooks</Link>
-              <Link href="">All Products</Link>
-            </div>
-          </div>
-          {/* <div className="flex flex-col justify-between">
-            <h1 className="font-medium text-lg">HELP</h1>
-            <div className="flex flex-col gap-6">
-              <Link href="">Customer Service</Link>
-              <Link href="">My Account</Link>
-              <Link href="">Find a Store</Link>
-              <Link href="">Legal & Privacy</Link>
-              <Link href="">Gift Card</Link>
-            </div>
-          </div> */}
-        </div>
-        {/* RIGHT */}
-        {/* <div className="w-full md:w-1/2 lg:w-1/4 flex flex-col gap-8">
-          <h1 className="font-medium text-lg">SUBSCRIBE</h1>
-          <p>
-            Be the first to get the latest news about trends, promotions, and
-            much more!
-          </p>
-          <div className="flex">
-            <input
-              type="text"
-              placeholder="Email address"
-              className="p-4 w-3/4"
-            />
-            <button className="w-1/4 bg-lama text-white">JOIN</button>
-          </div>
-          <span className="font-semibold">Secure Payments</span>
-          <div className="flex justify-between">
-            <Image src="/discover.png" alt="" width={40} height={20} />
-            <Image src="/skrill.png" alt="" width={40} height={20} />
-            <Image src="/paypal.png" alt="" width={40} height={20} />
-            <Image src="/mastercard.png" alt="" width={40} height={20} />
-            <Image src="/visa.png" alt="" width={40} height={20} />
-          </div>
-        </div> */}
       </div>
-      {/* BOTTOM */}
-      {/* <div className="flex flex-col md:flex-row items-center justify-between gap-8 mt-16">
-        <div className="">© 2024 Lama Shop</div>
-        <div className="flex flex-col gap-8 md:flex-row">
-          <div className="">
-            <span className="text-gray-500 mr-4">Language</span>
-            <span className="font-medium">United States | English</span>
-          </div>
-          <div className="">
-            <span className="text-gray-500 mr-4">Currency</span>
-            <span className="font-medium">$ USD</span>
-          </div>
+
+      {/* Copyright */}
+      <div className="border-t border-gray-400">
+        <div className="max-w-7xl mx-auto px-4 py-6 text-center text-sm">
+          <p>&copy; {currentYear} BDN Inc. All rights reserved.</p>
         </div>
-      </div> */}
-    </div>
+      </div>
+    </footer>
   );
 };
 
