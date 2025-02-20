@@ -8,7 +8,7 @@ const CategoryList = async () => {
 
   return (
     <div className="px-4 mx-auto max-w-[1420px]">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4  gap-4 md:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5  gap-4 md:gap-8">
         {cats.items.map((item) => (
           <Link
             href={`/list?cat=${item.slug}`}
