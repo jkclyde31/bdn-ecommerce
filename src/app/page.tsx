@@ -41,8 +41,8 @@ const HomePage = async () => {
         <h1 className="text-2xl">Featured Products</h1>
         <Suspense fallback={<Skeleton />}>
           <ProductList
-            categoryId="56ea80b2-6566-3e9f-3e73-af840a82ea4d"
-            limit={4}
+            categoryId={process.env.NEXT_PUBLIC_FEATURED_CATEGORY_ID!}
+            limit={8}
           />
         </Suspense>
       </div>

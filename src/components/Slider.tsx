@@ -18,25 +18,25 @@ interface Slide {
 const slides: Slide[] = [
   {
     id: 1,
-    title: "Summer Sale Collections",
-    description: "Sale! Up to 50% off!",
-    img: "https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg?auto=compress&cs=tinysrgb&w=800",
+    title: "Designed with Faith",
+    description: "Delivered with Purpose",
+    img: "/banner/banner1.jpg",
     url: "/",
-    bg: "bg-gradient-to-r from-yellow-50 to-pink-50",
+    bg: "bg-gradient-to-r from-green-50 to-pink-50",
   },
   {
     id: 2,
-    title: "Winter Sale Collections",
-    description: "Sale! Up to 50% off!",
-    img: "https://images.pexels.com/photos/1021693/pexels-photo-1021693.jpeg?auto=compress&cs=tinysrgb&w=800",
+    title: "Inspired Designs",
+    description: "Impactful Mission",
+    img: "/banner/banner2.jpg",
     url: "/",
     bg: "bg-gradient-to-r from-pink-50 to-blue-50",
   },
   {
     id: 3,
-    title: "Spring Sale Collections",
-    description: "Sale! Up to 50% off!",
-    img: "https://images.pexels.com/photos/1183266/pexels-photo-1183266.jpeg?auto=compress&cs=tinysrgb&w=800",
+    title: "Crafted in Grace",
+    description: "Serving with Vision",
+    img: "/banner/banner3.jpg",
     url: "/",
     bg: "bg-gradient-to-r from-blue-50 to-yellow-50",
   },
@@ -132,11 +132,11 @@ const Slider = () => {
             key={slide.id}
           >
             {/* TEXT CONTAINER */}
-            <div className="h-1/2 xl:w-1/2 xl:h-full flex flex-col items-center justify-center gap-8 2xl:gap-12 text-center">
+            <div className="h-1/2 xl:w-1/2 xl:h-full flex flex-col items-center justify-center gap-8 2xl:gap-6 text-center">
               <h2 className="text-xl lg:text-3xl 2xl:text-5xl">
                 {slide.description}
               </h2>
-              <h1 className="text-5xl lg:text-6xl 2xl:text-8xl font-semibold">
+              <h1 className="text-5xl lg:text-6xl 2xl:text-7xl font-semibold">
                 {slide.title}
               </h1>
               <Link href={slide.url}>
