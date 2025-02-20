@@ -30,7 +30,7 @@ const slides: Slide[] = [
     description: "Impactful Mission",
     img: "/banner/banner2.jpg",
     url: "/",
-    bg: "bg-gradient-to-r from-pink-50 to-blue-50",
+    bg: "bg-gradient-to-r from-green-50 to-pink-50",
   },
   {
     id: 3,
@@ -38,7 +38,7 @@ const slides: Slide[] = [
     description: "Serving with Vision",
     img: "/banner/banner3.jpg",
     url: "/",
-    bg: "bg-gradient-to-r from-blue-50 to-yellow-50",
+    bg: "bg-gradient-to-r from-green-50 to-pink-50",
   },
 ];
 
