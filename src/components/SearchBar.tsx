@@ -1,38 +1,63 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const SearchBar = () => {
-
+const ViewProducts = () => {
   const router = useRouter();
 
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const name = formData.get("name") as string;
-
-    if(name){
-      router.push(`/list?name=${name}`)
-    }
+  const handleClick = () => {
+    router.push("/list");
   };
 
   return (
-    <form
-      className="flex items-center justify-between gap-4 bg-gray-100 p-2 rounded-md flex-1"
-      onSubmit={handleSearch}
+    <button
+      onClick={handleClick}
+      className="bg-green-700 hover:bg-green-600 text-white px-6 py-2 rounded-md transition-colors duration-200 font-medium"
     >
-      <input
-        type="text"
-        name="name"
-        placeholder="Search"
-        className="flex-1 bg-transparent outline-none"
-      />
-      <button className="cursor-pointer">
-        <Image src="/search.png" alt="" width={16} height={16} />
-      </button>
-    </form>
+      View Products
+    </button>
   );
 };
 
-export default SearchBar;
+export default ViewProducts;
+
+
+
+
+
+// import Image from "next/image";
+// import { useRouter } from "next/navigation";
+
+// const SearchBar = () => {
+
+//   const router = useRouter();
+
+//   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+//     e.preventDefault();
+//     const formData = new FormData(e.currentTarget);
+//     const name = formData.get("name") as string;
+
+//     if(name){
+//       router.push(`/list?name=${name}`)
+//     }
+//   };
+
+//   return (
+//     <form
+//       className="flex items-center justify-between gap-4 bg-gray-100 p-2 rounded-md flex-1"
+//       onSubmit={handleSearch}
+//     >
+//       <input
+//         type="text"
+//         name="name"
+//         placeholder="Search"
+//         className="flex-1 bg-transparent outline-none"
+//       />
+//       <button className="cursor-pointer">
+//         <Image src="/search.png" alt="" width={16} height={16} />
+//       </button>
+//     </form>
+//   );
+// };
+
+// export default SearchBar;
