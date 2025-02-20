@@ -91,7 +91,7 @@ const CartModal = ({ isOpen, onClose }: CartModalProps) => {
                               {item.quantity} x{" "}
                             </div>
                           )}
-                          <span className="text-sm">${item.price?.amount}</span>
+                          <span className="text-sm">₱{item.price?.amount}</span>
                         </div>
                       </div>
                       <div className="text-xs sm:text-sm text-gray-500">
@@ -116,7 +116,7 @@ const CartModal = ({ isOpen, onClose }: CartModalProps) => {
             <div className="mt-2">
               <div className="flex items-center justify-between font-semibold">
                 <span>Subtotal</span>
-                <span>${(cart as any).subtotal?.amount || "0.00"}</span>
+                <span>₱{(cart as any).subtotal?.amount || "0.00"}</span>
                 </div>
               <p className="text-gray-500 text-xs sm:text-sm mt-2 mb-4">
                 Shipping and taxes calculated at checkout.
@@ -235,7 +235,7 @@ export default CartModal;
 //                               {item.quantity} x{" "}
 //                             </div>
 //                           )}
-//                           <span className="text-sm">${item.price?.amount}</span>
+//                           <span className="text-sm">₱{item.price?.amount}</span>
 //                         </div>
 //                       </div>
 //                       <div className="text-xs sm:text-sm text-gray-500">
@@ -260,7 +260,7 @@ export default CartModal;
 //             <div className="mt-2">
 //               <div className="flex items-center justify-between font-semibold">
 //                 <span>Subtotal</span>
-//                 <span>${cart.subtotal?.amount || "0.00"}</span>
+//                 <span>₱{cart.subtotal?.amount || "0.00"}</span>
 //               </div>
 //               <p className="text-gray-500 text-xs sm:text-sm mt-2 mb-4">
 //                 Shipping and taxes calculated at checkout.
