@@ -93,9 +93,33 @@ const MobileMenu = () => {
         console.error("Error fetching user data:", error);
       }
     };
-
+  
+    // Initial fetch
     fetchUser();
-  }, []);
+    
+    // Check if this is a redirect from OAuth login
+    const checkOAuthRedirect = () => {
+      const oAuthData = localStorage.getItem("oAuthRedirectData");
+      if (oAuthData && wixClient.auth.loggedIn()) {
+        // Clear the OAuth data
+        localStorage.removeItem("oAuthRedirectData");
+        // Fetch user data again
+        fetchUser();
+      }
+    };
+    
+    // Check on component mount and whenever auth state might change
+    checkOAuthRedirect();
+    
+    // You could also add an interval to periodically check login status
+    const intervalId = setInterval(() => {
+      if (wixClient.auth.loggedIn() && !userData) {
+        fetchUser();
+      }
+    }, 1000);
+    
+    return () => clearInterval(intervalId);
+  }, [wixClient.auth, userData]);
 
   return (
     <div className="px-4 relative h-full flex items-center justify-between md:hidden">
