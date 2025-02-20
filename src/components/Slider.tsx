@@ -140,7 +140,7 @@ const Slider = () => {
                 {slide.title}
               </h1>
               <Link href={slide.url}>
-                <button className="rounded-md bg-black text-white py-3 px-4">
+                <button className="rounded-md bg-green-700 text-white py-3 px-4">
                   SHOP NOW
                 </button>
               </Link>
@@ -176,13 +176,13 @@ const Slider = () => {
             {slides.map((slide, idx) => (
               <div
                 key={slide.id}
-                className={`w-3 h-3 rounded-full ring-1 ring-white sm:ring-gray-600 cursor-pointer flex items-center justify-center ${
+                className={`w-3 h-3 rounded-full ring-1 ring-white sm:ring-green-900 cursor-pointer flex items-center justify-center ${
                   currentSlide === idx ? "scale-150" : ""
                 }`}
                 onClick={() => instanceRef.current?.moveToIdx(idx)}
               >
                 {currentSlide === idx && (
-                  <div className="w-[6px] h-[6px] bg-white sm:bg-gray-600 rounded-full" />
+                  <div className="w-[6px] h-[6px] bg-white sm:bg-green-900 rounded-full" />
                 )}
               </div>
             ))}
