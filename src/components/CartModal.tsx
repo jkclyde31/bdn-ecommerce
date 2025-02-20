@@ -12,6 +12,8 @@ interface CartModalProps {
   onClose: () => void;
 }
 
+
+
 const CartModal = ({ isOpen, onClose }: CartModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const wixClient = useWixClient();
@@ -114,8 +116,8 @@ const CartModal = ({ isOpen, onClose }: CartModalProps) => {
             <div className="mt-2">
               <div className="flex items-center justify-between font-semibold">
                 <span>Subtotal</span>
-                <span>${cart.subtotal?.amount || "0.00"}</span>
-              </div>
+                <span>${(cart as any).subtotal?.amount || "0.00"}</span>
+                </div>
               <p className="text-gray-500 text-xs sm:text-sm mt-2 mb-4">
                 Shipping and taxes calculated at checkout.
               </p>
