@@ -156,7 +156,7 @@ const NavIcons = () => {
         alt="Profile"
         width={26}
         height={26}
-        className="cursor-pointer rounded-full"
+        className="cursor-pointer rounded-full brightness-0 invert"
         onClick={login}
       />
       {/* Profile Dropdown */}
@@ -182,10 +182,10 @@ const NavIcons = () => {
 
       {/* Cart Icon */}
       <div
-        className="relative cursor-pointer"
+        className="relative cursor-pointer "
         onClick={() => setIsCartOpen((prev) => !prev)}
       >
-        <Image src="/cart.png" alt="Cart" width={22} height={22} />
+        <Image src="/cart.png" alt="Cart" width={22} height={22} className="brightness-0 invert"/>
         <div className="absolute -top-4 -right-4 w-6 h-6 bg-lama rounded-full text-white text-sm flex items-center justify-center">
           {counter}
         </div>

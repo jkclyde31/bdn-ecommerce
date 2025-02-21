@@ -4,8 +4,7 @@
 import { useState } from "react";
 import { shoes } from "../constants";
 import { StaticImageData } from "next/image";
-import { bigShoe1 } from "../../public/assets/images";
-import { e2 } from "../../public/assets/images";
+import { e1 } from "../../public/assets/images";
 import { ArrowRight } from "lucide-react";
 import ProductCard from "./ProductCard";
 
@@ -23,7 +22,7 @@ interface ShoeCardProps {
 }
 
 const Hero: React.FC = () => {
-  const [bigShoeImg, setBigShoeImg] = useState<StaticImageData>(e2);
+  const [bigShoeImg, setBigShoeImg] = useState<StaticImageData>(e1);
 
   return (
     <section
