@@ -9,7 +9,7 @@ const NavIcons = dynamic(() => import("./NavIcons"), { ssr: false });
 
 const Navbar = () => {
   return (
-    <div className="h-20  md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative">
+    <div className="h-20  md:px-8 lg:px-16 xl:px-32 2xl:px-64 absolute z-50 w-full">
       {/* MOBILE */}
       {/* <div className="h-full flex items-center justify-between md:hidden">
         <Link href="/">

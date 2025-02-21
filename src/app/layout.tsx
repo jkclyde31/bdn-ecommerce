@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { WixClientContextProvider } from "@/context/wixContext";
+import Hero from "@/components/Banner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,8 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+      <Navbar/>
+
         <WixClientContextProvider>
-          <Navbar/>
+        <section className='xl:padding-l wide:padding-r padding-b bg-white '>
+        <Hero />
+      </section>
            {children}
           <Footer/>
         </WixClientContextProvider>

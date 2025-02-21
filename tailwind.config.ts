@@ -12,10 +12,14 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+
+          'hero': "url('/assets/images/collection-background.svg')",
+          'card': "url('/assets/images/thumbnail-background.svg')",
       },
       colors: {
         lama: "#F35C7A",
       },
+   
     },
   },
   plugins: [],
