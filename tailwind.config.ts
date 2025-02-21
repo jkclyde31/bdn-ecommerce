@@ -18,8 +18,23 @@ const config: Config = {
       },
       colors: {
         lama: "#F35C7A",
+        'primary': "green-300",
+        "coral-red": "#FF6452",
+        "slate-gray": "#6D6D6D",
+        "pale-blue": "#F5F6FF",
+        "white-400": "rgba(255, 255, 255, 0.80)",
+        // "main" : "#222831",
+        // "main-text" : "#EEEEEE",
+        // "main-secondary" : "#76ABAE"
+
+
+        // Edit SVGS - collection-background, hamburger
+
+        "main" : "#1B262C",
+        "main-text" : "#BBE1FA",
+        "main-secondary" : "#3282B8",
+        "main-third" : "#0F4C75",
       },
-   
     },
   },
   plugins: [],
