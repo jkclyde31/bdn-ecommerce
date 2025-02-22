@@ -27,10 +27,10 @@ const Hero: React.FC = () => {
   return (
     <section
       id='home'
-      className='w-full flex xl:flex-row flex-col justify-center min-h-screen gap-10 max-w-[1440px] mx-auto '
+      className='w-full flex xl:flex-row flex-col justify-center min-h-screen gap-10 max-w-[1440px] mx-auto px-[15px]'
     >
       <div className='relative xl:w-2/5 flex flex-col justify-center items-start w-full max-xl:padding-x pt-28'>
-        <h1 className='mt-10 text-green-900 text-8xl text-main-text max-sm:text-[72px] max-sm:leading-[82px] font-bold'>
+        <h1 className='mt-10 text-[25px] md:text-8xl text-main-text max-sm:text-[72px] max-sm:leading-[82px] font-bold'>
           <span className='xl:text-main-text xl:whitespace-nowrap relative pr-10'>
             Gear Up for
           </span>
