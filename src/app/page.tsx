@@ -93,7 +93,7 @@ const HomePage = async () => {
       </div>
 
 
-        <h1 className="text-2xl">New Products</h1>
+        {/* <h1 className="text-2xl">New Products</h1> */}
         <Suspense fallback={<Skeleton />}>
           <ProductList
             categoryId={process.env.NEXT_PUBLIC_SHIRT_CATEGORY_ID!}
