@@ -62,9 +62,9 @@ const HomePage = async () => {
       </div>
 
 
-    <div className="bg-green-700 mt-[50px] md:mt-24">
+    {/* <div className="bg-green-700 mt-[50px] md:mt-24">
     <SuperQuality/>
-    </div>
+    </div> */}
 
       <div className="mt-[50px] md:mt-24">
         <h1 className="text-2xl px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64  mb-[15px] md:mb-12">
