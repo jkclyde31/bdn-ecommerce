@@ -24,9 +24,7 @@ export default function RootLayout({
       <Navbar/>
 
         <WixClientContextProvider>
-        <section className='xl:padding-l wide:padding-r padding-b bg-white '>
-        <Hero />
-      </section>
+
            {children}
           <Footer/>
         </WixClientContextProvider>

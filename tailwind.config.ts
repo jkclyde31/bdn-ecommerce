@@ -13,13 +13,15 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
 
-          'hero': "url('/assets/images/collection-background.svg')",
+          'hero': "url('/assets/images/banner2.jpg')",
           'card': "url('/assets/images/thumbnail-background.svg')",
       },
       colors: {
         lama: "#F35C7A",
-        'primary': "green-300",
-        "coral-red": "#FF6452",
+        'primary': "#123524",
+        "secondary": "#3E7B27",
+        "text" : "#EFE3C2",
+        // "coral-red": "#FF6452",
         "slate-gray": "#6D6D6D",
         "pale-blue": "#F5F6FF",
         "white-400": "rgba(255, 255, 255, 0.80)",
@@ -28,11 +30,10 @@ const config: Config = {
         // "main-secondary" : "#76ABAE"
 
 
-        // Edit SVGS - collection-background, hamburger
 
-        "main" : "#1B262C",
-        "main-text" : "#BBE1FA",
-        "main-secondary" : "#3282B8",
+        "main" : "#15803d",
+        "main-text" : "#15803d",
+        "main-secondary" : "#22c55e",
         "main-third" : "#0F4C75",
       },
     },
