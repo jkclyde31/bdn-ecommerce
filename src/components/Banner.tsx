@@ -40,7 +40,7 @@ const Hero: React.FC = () => {
         <p className='font-montserrat text-black text-lg leading-8 mt-6 mb-14 sm:max-w-sm '>
           Find Everything You Need to Dominate Your Sport. Browse our Curated Collection of Sports Essentials.
         </p>
-        <button className="flex justify-center items-center gap-2 px-7 py-4 border font-montserrat text-lg leading-none rounded-full text-green-700 border-green-700">
+        <button className="flex justify-center items-center gap-2 px-7 py-4 border font-montserrat text-lg leading-none rounded-full text-primary border-primary">
           Shop now
           <ArrowRight className="ml-2 w-5 h-5" />
         </button>

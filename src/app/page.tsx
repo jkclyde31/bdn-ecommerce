@@ -46,7 +46,7 @@ const HomePage = async () => {
       <div className='flex flex-col justify-start gap-5'>
         {/* Description Part */}
         <h2 className='text-4xl  font-bold'>
-          Our <span className='text-green-700'> Popular </span> Products
+          Our <span className='text-primary'> Popular </span> Products
         </h2>
         <p className='lg:max-w-lg mt-2 font-montserrat text-slate-gray'>
           Experience top-notch quality and style with our sought-after
@@ -62,7 +62,7 @@ const HomePage = async () => {
       </div>
 
 
-    {/* <div className="bg-green-700 mt-[50px] md:mt-24">
+    {/* <div className="bg-primary mt-[50px] md:mt-24">
     <SuperQuality/>
     </div> */}
 
@@ -84,7 +84,7 @@ const HomePage = async () => {
       <div className='flex flex-col justify-start gap-5'>
         {/* Description Part */}
         <h2 className='text-4xl  font-bold'>
-          Our <span className='text-green-700'> Popular </span> Products
+          Our <span className='text-primary'> Popular </span> Products
         </h2>
         <p className='lg:max-w-lg mt-2 font-montserrat text-slate-gray'>
           Experience top-notch quality and style with our sought-after

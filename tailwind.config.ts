@@ -18,9 +18,13 @@ const config: Config = {
       },
       colors: {
         lama: "#F35C7A",
-        'primary': "#123524",
+
+        // green
+        'primary': "#15803d",
         "secondary": "#3E7B27",
         "text" : "#EFE3C2",
+
+
         // "coral-red": "#FF6452",
         "slate-gray": "#6D6D6D",
         "pale-blue": "#F5F6FF",
