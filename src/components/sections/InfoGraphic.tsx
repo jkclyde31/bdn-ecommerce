@@ -24,18 +24,18 @@ const SuperQuality: React.FC = () => {
     >
       {/* LEFT SIDE */}
       <div className='flex flex-1 flex-col'>
-        <h2 className='font-palanquin capitalize text-4xl lg:max-w-lg font-bold text-primary'>
+        <h2 className='font-palanquin capitalize text-4xl lg:max-w-lg font-bold text-black'>
           We Provide You
-          <span className='text-main-secondary'> Super </span>
-          <span className='text-main-secondary'>Quality </span> Products
+          <span className='text-primary'> Super </span>
+          <span className='text-primary'>Quality </span> Products
         </h2>
 
-        <p className='lg:max-w-lg info-text2'>
+        <p className='lg:max-w-lg text-black mt-[25px]'>
           Ensuring premium comfort and style, our meticulously crafted gears
           is designed to elevate your experience, providing you with unmatched
           quality, innovation, and a touch of elegance.
         </p>
-        <p className='mt-6 lg:max-w-lg info-text2'>
+        <p className='mt-6 lg:max-w-lg text-black'>
           Our dedication to detail and excellence ensures your satisfaction
         </p>
         {/* <div className='mt-11'>

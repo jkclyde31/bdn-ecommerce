@@ -21,7 +21,7 @@ const config: Config = {
 
         // green
         'primary': "#15803d",
-        "secondary": "#3E7B27",
+        "secondary": "#E8F5E9",
         "text" : "#EFE3C2",
 
 

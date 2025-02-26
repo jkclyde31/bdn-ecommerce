@@ -62,9 +62,9 @@ const HomePage = async () => {
       </div>
 
 
-    {/* <div className="bg-primary mt-[50px] md:mt-24">
-    <SuperQuality/>
-    </div> */}
+      <div className="bg-gradient-to-r from-[#E8F5E9] to-[#F1F8E9] mt-[50px] md:mt-24 py-[50px]">
+  <SuperQuality />
+</div>
 
       <div className="mt-[50px] md:mt-24">
         <h1 className="text-2xl px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64  mb-[15px] md:mb-12">
@@ -75,7 +75,7 @@ const HomePage = async () => {
         </Suspense>
       </div>
 
-      <div className="max-w-[1440px] mx-auto">
+      <div className="max-w-[1440px] mx-auto mt-[50px] md:mt-24 mb-[50px] md:mb-24">
         <Services/>
       </div>
 
