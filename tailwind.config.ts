@@ -15,6 +15,7 @@ const config: Config = {
 
           'hero': "url('/assets/images/banner2.jpg')",
           'card': "url('/assets/images/thumbnail-background.svg')",
+          'shop-bg' : "url('/offer-full-bg.jpg')",
       },
       colors: {
         lama: "#F35C7A",
@@ -39,6 +40,11 @@ const config: Config = {
         "main-text" : "#15803d",
         "main-secondary" : "#22c55e",
         "main-third" : "#0F4C75",
+      },
+      fontFamily: {
+        montserrat: ['Montserrat', 'sans-serif'],
+        palanquin: ['Palanquin', 'sans-serif'],
+        quicksand: ['Quicksand', 'sans-serif'],
       },
     },
   },

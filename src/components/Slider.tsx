@@ -132,15 +132,15 @@ const Slider = () => {
             key={slide.id}
           >
             {/* TEXT CONTAINER */}
-            <div className="h-1/2 xl:w-1/2 xl:h-full flex flex-col items-center justify-center gap-8 2xl:gap-6 text-center">
-              <h2 className="text-xl lg:text-3xl 2xl:text-5xl">
+            <div className="h-1/2 xl:w-1/2 xl:h-full flex flex-col items-center justify-center gap-8 2xl:gap-6 text-center px-[15px]">
+              <h2 className="text-xl lg:text-3xl 2xl:text-5xl  pt-[25px]">
                 {slide.description}
               </h2>
-              <h1 className="text-5xl lg:text-6xl 2xl:text-7xl font-semibold">
+              <h1 className="text-5xl lg:text-6xl 2xl:text-7xl font-semibold leading-[140%]">
                 {slide.title}
               </h1>
               <Link href={slide.url}>
-                <button className="rounded-md bg-green-700 text-white py-3 px-4">
+                <button className=" bg-green-700 text-white py-3 px-4">
                   SHOP NOW
                 </button>
               </Link>

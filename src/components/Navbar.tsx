@@ -9,7 +9,10 @@ const NavIcons = dynamic(() => import("./NavIcons"), { ssr: false });
 
 const Navbar = () => {
   return (
-    <div className="h-20  md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative z-50 w-full">
+    // <div className="h-20  md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative z-50 w-full">
+
+    <div className="h-[120px]  max-w-[1400px] px-[15px]  relative z-50 w-full mx-auto">
+
       {/* MOBILE */}
       {/* <div className="h-full flex items-center justify-between md:hidden">
         <Link href="/">
@@ -29,7 +32,7 @@ const Navbar = () => {
             <Image src="/bdn-logo.png" alt="" width={50} height={50} />
             <div className="text-2xl tracking-wide">BDN Inc.</div>
           </Link>
-          <div className="hidden xl:flex gap-4">
+          <div className="hidden xl:flex gap-4 font-quicksand">
             <Link href="/">Home</Link>
             <Link href="/list">Shop</Link>
             <Link href="/">About</Link>

@@ -5,28 +5,29 @@ import Link from "next/link";
 const CategoryList = async () => {
   const wixClient = await wixClientServer();
   const cats = await wixClient.collections.queryCollections().find();
-
+  
   return (
     <div className="px-4 mx-auto max-w-[1420px]">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5  gap-4 md:gap-8">
+      <h2 className="text-gray-500 font-medium mb-4">CATEGORIES</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4">
         {cats.items.map((item) => (
           <Link
             href={`/list?cat=${item.slug}`}
-            className="block group"
+            className="block text-center"
             key={item._id}
           >
-            <div className="relative bg-slate-100 w-full aspect-[3/4]">
+            <div className="relative bg-gray-50 w-full aspect-square sm:aspect-[3/4]">
               <Image
                 src={item.media?.mainMedia?.image?.url || "/cat.png"}
-                alt=""
+                alt="text"
                 fill
                 sizes="(min-width: 1536px) 16vw, (min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                className="object-cover transition-transform duration-300 hover:scale-105"
               />
             </div>
-            <h1 className="mt-8 font-light text-xl tracking-wide">
+            <h3 className="mt-2 sm:mt-8 text-sm sm:text-xl sm:font-light sm:tracking-wide text-center sm:text-left">
               {item.name}
-            </h1>
+            </h3>
           </Link>
         ))}
       </div>

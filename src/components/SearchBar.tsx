@@ -12,7 +12,7 @@ const ViewProducts = () => {
   return (
     <button
       onClick={handleClick}
-      className="bg-primary lg:bg-white hover:bg-green-600 lg:hover:bg-slate-300 text-white lg:text-primary border border-primary px-6 py-2 rounded-md transition-colors duration-200 font-medium"
+      className="bg-primary lg:bg-white hover:bg-green-600 lg:hover:bg-slate-300 text-white lg:text-primary border border-primary px-6 py-2  transition-colors duration-200 font-medium"
     >
       View Products
     </button>
