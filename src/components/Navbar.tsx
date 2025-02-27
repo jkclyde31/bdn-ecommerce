@@ -11,7 +11,7 @@ const Navbar = () => {
   return (
     // <div className="h-20  md:px-8 lg:px-16 xl:px-32 2xl:px-64 relative z-50 w-full">
 
-    <div className="h-[120px]  max-w-[1400px] px-[15px]  relative z-50 w-full mx-auto">
+    <div className="h-[70px] md:h-[120px]  max-w-[1400px] px-[15px]  relative z-50 w-full mx-auto">
 
       {/* MOBILE */}
       {/* <div className="h-full flex items-center justify-between md:hidden">
