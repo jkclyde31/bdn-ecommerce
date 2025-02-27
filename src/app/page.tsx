@@ -126,7 +126,7 @@ const HomePage = async () => {
         <Suspense fallback={<Skeleton />}>
           <ProductList
             categoryId={process.env.NEXT_PUBLIC_SHIRT_CATEGORY_ID!}
-            limit={4}
+            limit={8}
           />
         </Suspense>
       </div>
