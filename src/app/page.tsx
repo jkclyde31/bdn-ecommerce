@@ -108,12 +108,12 @@ const HomePage = async () => {
         </Suspense>
       </div>
 
-      <div className="max-w-[1440px] mx-auto mt-[50px] md:mt-24 mb-[50px] md:mb-24">
+      <div className="max-w-[1440px] mx-auto mt-[0px] md:mt-24 mb-[0px] md:mb-24">
         <Services/>
       </div>
 
       
-      <div className="mt-[50px] md:mt-24c px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+      <div className="md:mt-[50px] md:mt-24c px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
       <div className='flex flex-col justify-start gap-5'>
         {/* Description Part */}
         <h2 className='text-[24px] md:text-4xl  font-bold'>
