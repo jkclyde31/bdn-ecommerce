@@ -47,12 +47,113 @@ const HomePage = async () => {
         </Suspense>
       </div>
 
-      {/* Shirts Section */}
-      <div className=" mt-[20px] md:mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+      
+
+    {/* Shirts Section */}
+      <div className="mt-[50px] md:mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+        <div className='flex flex-col justify-start'>
+          <div className="flex  sm:items-center justify-between">
+            <h2 className="text-gray-500 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
+              <span className="md:hidden">T-shirts</span>
+              <span className="hidden md:inline">Faith-Inspired <span className="text-primary">Shirts</span> for Every Believer</span>
+            </h2>
+            <a href="#" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</a>
+          </div>
+        </div>
+        <Suspense fallback={<Skeleton />}>
+          <ProductList
+            categoryId={process.env.NEXT_PUBLIC_SHIRT_CATEGORY_ID!}
+            limit={4}
+          />
+        </Suspense>
+      </div>
+
+      {/* Hoodies  */}
+      <div className="mt-[50px] md:mt-24 px-4 md:px-4 lg:px-16 xl:px-32 2xl:px-64">
+        <div className='flex flex-col justify-start'>
+          <div className="flex  sm:items-center justify-between">
+            <h2 className="text-gray-500 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
+              <span className="md:hidden">Hoodies</span>
+              <span className="hidden md:inline">Faith-Inspired <span className="text-primary">Hoodies</span> for Every Believer</span>
+            </h2>
+            <a href="#" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</a>
+          </div>
+        </div>
+        <Suspense fallback={<Skeleton />}>
+          <ProductList
+            categoryId={process.env.NEXT_PUBLIC_HOODIE_CATEGORY_ID!}
+            limit={8}
+          />
+        </Suspense>
+      </div>
+
+        {/* Jackets Jackets */}
+        <div className="mt-[50px] md:mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+        <div className='flex flex-col justify-start'>
+          <div className="flex  sm:items-center justify-between">
+            <h2 className="text-gray-500 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
+              <span className="md:hidden">Jackets</span>
+              <span className="hidden md:inline">Faith-Inspired <span className="text-primary">Jackets</span> for Every Believer</span>
+            </h2>
+            <a href="#" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</a>
+          </div>
+        </div>
+        <Suspense fallback={<Skeleton />}>
+          <ProductList
+            categoryId={process.env.NEXT_PUBLIC_JACKET_CATEGORY_ID!}
+            limit={4}
+          />
+        </Suspense>
+      </div>
+
+      
+
+      {/* Mugs Jackets */}
+      <div className="mt-[50px] md:mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+        <div className='flex flex-col justify-start'>
+          <div className="flex  sm:items-center justify-between">
+            <h2 className="text-gray-500 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
+              <span className="md:hidden">Mugs</span>
+              <span className="hidden md:inline">Faith-Inspired <span className="text-primary">Mugs</span> for Every Believer</span>
+            </h2>
+            <a href="#" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</a>
+          </div>
+        </div>
+        <Suspense fallback={<Skeleton />}>
+          <ProductList
+            categoryId={process.env.NEXT_PUBLIC_MUGS_CATEGORY_ID!}
+            limit={4}
+          />
+        </Suspense>
+      </div>
+
+        {/* Notebooks Jackets */}
+        <div className="mt-[50px] md:mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+        <div className='flex flex-col justify-start'>
+          <div className="flex  sm:items-center justify-between">
+            <h2 className="text-gray-500 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
+              <span className="md:hidden">Notebooks</span>
+              <span className="hidden md:inline">Faith-Inspired <span className="text-primary">Notebooks</span> for Every Believer</span>
+            </h2>
+            <a href="#" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</a>
+          </div>
+        </div>
+        <Suspense fallback={<Skeleton />}>
+          <ProductList
+            categoryId={process.env.NEXT_PUBLIC_NOTEBOOKS_CATEGORY_ID!}
+            limit={4}
+          />
+        </Suspense>
+      </div>
+
+ 
+     
+    {/* Jacket Section */}
+      <div className=" mt-[50px] md:mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
         <div className='flex flex-col justify-start'>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between">
-            <h2 className="text-gray-600 font-medium mb-4 text-[25px]">Faith-Inspired <span className="text-primary">Shirts</span> for Every Believer</h2>
-            <a href="#" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</a>
+            <h2 className="text-gray-500 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">Faith-Inspired <span className="text-primary">Shirts</span> for Every Believer</h2>
+            <a href="#" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0 hidden md:block">View All</a>
           </div>
         </div>
         <Suspense fallback={<Skeleton />}>
@@ -63,8 +164,8 @@ const HomePage = async () => {
         </Suspense>
       </div>
 
-      {/* Promo Section */}
-      <section className="relative overflow-hidden  py-[25px] md:py-[100px] px-4 bg-shop-bg bg-cover bg-center my-[25px] md:my-[100px] max-w-[1400px] mx-auto">
+           {/* Promo Section */}
+           <section className="relative overflow-hidden  py-[25px] md:py-[100px] px-4 bg-shop-bg bg-cover bg-center my-[25px] md:my-[100px] max-w-[1400px] mx-auto">
         {/* Dark Overlay - Only on Mobile */}
         <div className="absolute inset-0 bg-black  bg-opacity-50 max-md:z-0 md:hidden"></div>
 
@@ -89,7 +190,6 @@ const HomePage = async () => {
           </div>
         </div>
       </section>
-     
 
 
 
