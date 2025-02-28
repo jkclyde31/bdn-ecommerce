@@ -8,8 +8,8 @@ import { WixClientContext } from "@/context/wixContext";
 import { useWixClient } from "../../hooks/useWixClient";
 import { wixClientServer } from "../../lib/wixClientServer";
 import { Suspense, useContext, useEffect } from "react";
-import SuperQuality from "@/components/sections/InfoGraphic";
 import Services from "@/components/sections/Services";
+import Link from "next/link";
 
 const HomePage = async () => {
 
@@ -53,11 +53,11 @@ const HomePage = async () => {
       <div className="mt-[50px] md:mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
         <div className='flex flex-col justify-start'>
           <div className="flex  sm:items-center justify-between">
-            <h2 className="text-gray-500 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
+            <h2 className="text-gray-700 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
               <span className="md:hidden">T-shirts</span>
-              <span className="hidden md:inline"><span className=" font-bold">Shirts</span></span>
+              <span className="hidden md:inline"><span className=" ">Shirts</span></span>
             </h2>
-            <a href="#" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</a>
+            <Link href="/list?cat=t-shirts" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</Link>
           </div>
         </div>
         <Suspense fallback={<Skeleton />}>
@@ -72,11 +72,11 @@ const HomePage = async () => {
       <div className="mt-[50px] md:mt-24 px-4 md:px-4 lg:px-16 xl:px-32 2xl:px-64">
         <div className='flex flex-col justify-start'>
           <div className="flex  sm:items-center justify-between">
-            <h2 className="text-gray-500 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
+            <h2 className="text-gray-700 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
               <span className="md:hidden">Hoodies</span>
-              <span className="hidden md:inline">  <span className=" font-bold">Hoodies</span> </span>
+              <span className="hidden md:inline">  <span className=" ">Hoodies</span> </span>
             </h2>
-            <a href="#" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</a>
+            <Link href="/list?cat=hoodies" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</Link>
           </div>
         </div>
         <Suspense fallback={<Skeleton />}>
@@ -91,11 +91,11 @@ const HomePage = async () => {
         <div className="mt-[50px] md:mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
         <div className='flex flex-col justify-start'>
           <div className="flex  sm:items-center justify-between">
-            <h2 className="text-gray-500 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
+            <h2 className="text-gray-700 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
               <span className="md:hidden">Jackets</span>
-              <span className="hidden md:inline"><span className=" font-bold">Jackets</span></span>
+              <span className="hidden md:inline"><span className=" ">Jackets</span></span>
             </h2>
-            <a href="#" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</a>
+            <Link href="/list?cat=featured-products" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</Link>
           </div>
         </div>
         <Suspense fallback={<Skeleton />}>
@@ -112,11 +112,11 @@ const HomePage = async () => {
       <div className="mt-[50px] md:mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
         <div className='flex flex-col justify-start'>
           <div className="flex  sm:items-center justify-between">
-            <h2 className="text-gray-500 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
+            <h2 className="text-gray-700 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
               <span className="md:hidden">Mugs</span>
-              <span className="hidden md:inline"><span className=" font-bold">Mugs</span></span>
+              <span className="hidden md:inline"><span className=" ">Mugs</span></span>
             </h2>
-            <a href="#" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</a>
+            <Link href="/list?cat=category1" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</Link>
           </div>
         </div>
         <Suspense fallback={<Skeleton />}>
@@ -131,11 +131,11 @@ const HomePage = async () => {
         <div className="mt-[50px] md:mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
         <div className='flex flex-col justify-start'>
           <div className="flex  sm:items-center justify-between">
-            <h2 className="text-gray-500 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
+            <h2 className="text-gray-700 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
               <span className="md:hidden">Notebooks</span>
-              <span className="hidden md:inline"><span className=" font-bold">Notebooks</span></span>
+              <span className="hidden md:inline"><span className=" ">Notebooks</span></span>
             </h2>
-            <a href="#" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</a>
+            <Link href="/list?cat=notebooks" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</Link>
           </div>
         </div>
         <Suspense fallback={<Skeleton />}>
@@ -159,7 +159,7 @@ const HomePage = async () => {
             {/* Content Area (Left Side) */}
             <div className="md:w-1/2 z-10 p-6">
               <h3 className="text-black md:text-black max-md:text-white font-medium mb-2">SUMMER SALE OFFER</h3>
-              <h2 className="text-5xl md:text-6xl font-bold text-black md:text-black max-md:text-white mb-4">
+              <h2 className="text-5xl md:text-6xl  text-black md:text-black max-md:text-white mb-4">
                 UP TO 60% <br /> OFF
               </h2>
               <p className="text-black md:text-black max-md:text-white mb-6">
