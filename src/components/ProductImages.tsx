@@ -3,45 +3,30 @@
 import Image from "next/image";
 import { useState } from "react";
 
-// const images = [
-//   {
-//     id: 1,
-//     url: "https://images.pexels.com/photos/19036832/pexels-photo-19036832/free-photo-of-mountain-reflection-in-lake.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load",
-//   },
-//   {
-//     id: 2,
-//     url: "https://images.pexels.com/photos/17867705/pexels-photo-17867705/free-photo-of-crowd-of-hikers-on-the-mountain-ridge-at-dusk.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load",
-//   },
-//   {
-//     id: 3,
-//     url: "https://images.pexels.com/photos/21812160/pexels-photo-21812160/free-photo-of-puerta-colonial-color-rojo-de-guanajuato-mexico.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load",
-//   },
-//   {
-//     id: 4,
-//     url: "https://images.pexels.com/photos/20832069/pexels-photo-20832069/free-photo-of-a-narrow-street-with-buildings-and-cars.jpeg?auto=compress&cs=tinysrgb&w=800&lazy=load",
-//   },
-// ];
-
 const ProductImages = ({ items }: { items: any }) => {
   const [index, setIndex] = useState(0);
 
   return (
-    <div className="">
-      <div className="h-[500px] relative">
+    <div className="flex flex-col space-y-4">
+      {/* Main image container with aspect ratio instead of fixed height */}
+      <div className="relative w-full aspect-square md:aspect-[4/3] lg:aspect-[16/9]">
         <Image
           src={items[index].image?.url}
           alt=""
           fill
-          sizes="50vw"
-          className="object-cover rounded-md"
-          objectFit="contain"
-
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-contain rounded-md"
+          priority
         />
       </div>
-      <div className="flex justify-center gap-4 md:mt-2">
-        {items.map((item:any, i:number) => (
+      
+      {/* Thumbnail images with consistent spacing */}
+      <div className="grid grid-cols-4 gap-2 md:gap-4">
+        {items.map((item: any, i: number) => (
           <div
-            className="w-1/4 h-32 relative gap-4 mt-[15px] md:mt-2 cursor-pointer"
+            className={`relative aspect-square cursor-pointer rounded-md overflow-hidden border-2 ${
+              i === index ? "border-blue-500" : "border-gray-200"
+            }`}
             key={item._id}
             onClick={() => setIndex(i)}
           >
@@ -49,9 +34,8 @@ const ProductImages = ({ items }: { items: any }) => {
               src={item.image?.url}
               alt=""
               fill
-              sizes="30vw"
-              className="object-cover rounded-md"
-              objectFit="contain"
+              sizes="25vw"
+              className="object-cover p-1"
             />
           </div>
         ))}
