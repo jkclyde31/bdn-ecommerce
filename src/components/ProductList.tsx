@@ -48,7 +48,7 @@ const ProductList = async ({
   const res = await productQuery.find();
 
   return (
-    <div className="mt-[15px] md:mt-12 md:flex md:gap-x-8 md:gap-y-16 md:justify-between md:flex-wrap">
+    <div className="mt-[15px] md:mt-[15px] md:flex md:gap-x-8 md:gap-y-16 md:justify-between md:flex-wrap">
       {/* Mobile view (grid) that switches to original desktop layout */}
       <div className="grid grid-cols-2 gap-2 md:hidden w-full">
         {res.items.map((product: products.Product) => (

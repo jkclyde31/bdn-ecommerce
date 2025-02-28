@@ -8,7 +8,7 @@ const CategoryList = async () => {
   
   return (
     <div className="px-4 mx-auto max-w-[1420px]">
-      <h2 className="text-gray-500 font-medium mb-4">CATEGORIES</h2>
+      <h2 className="text-gray-500 font-medium mb-4 text-[25px]">CATEGORIES</h2>
       <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-4">
         {cats.items.map((item) => (
           <Link
