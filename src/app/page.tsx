@@ -49,15 +49,24 @@ const HomePage = async () => {
 
       
 
-    {/* Shirts Section */}
+      {/* Shirts Section */}
       <div className="mt-[50px] md:mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
         <div className='flex flex-col justify-start'>
-          <div className="flex  sm:items-center justify-between">
-            <h2 className="text-gray-700 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
+          <div className="flex items-center justify-between ">
+            <h2 className="text-gray-700 font-medium text-[20px] md:text-[25px]">
               <span className="md:hidden">T-shirts</span>
-              <span className="hidden md:inline"><span className=" ">Shirts</span></span>
+              <span className="hidden md:inline">Shirts</span>
             </h2>
-            <Link href="/list?cat=t-shirts" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</Link>
+            <Link 
+              href="/list?cat=t-shirts" 
+              className="flex items-center gap-1 bg-primary/10 hover:bg-primary/20 text-primary font-medium px-4 py-2 rounded-full transition-all duration-200 text-[14px]"
+            >
+              View All
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </Link>
           </div>
         </div>
         <Suspense fallback={<Skeleton />}>
@@ -70,13 +79,22 @@ const HomePage = async () => {
 
       {/* Hoodies  */}
       <div className="mt-[50px] md:mt-24 px-4 md:px-4 lg:px-16 xl:px-32 2xl:px-64">
-        <div className='flex flex-col justify-start'>
-          <div className="flex  sm:items-center justify-between">
+        <div className='flex flex-col justify-center'>
+          <div className="flex  sm:items-center justify-between items-center">
             <h2 className="text-gray-700 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
               <span className="md:hidden">Hoodies</span>
               <span className="hidden md:inline">  <span className=" ">Hoodies</span> </span>
             </h2>
-            <Link href="/list?cat=hoodies" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</Link>
+            <Link 
+               href="/list?cat=hoodies"
+              className="flex items-center gap-1 bg-primary/10 hover:bg-primary/20 text-primary font-medium px-4 py-2 rounded-full transition-all duration-200 text-[14px]"
+            >
+              View All
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </Link>
           </div>
         </div>
         <Suspense fallback={<Skeleton />}>
@@ -89,13 +107,22 @@ const HomePage = async () => {
 
         {/* Jackets Jackets */}
         <div className="mt-[50px] md:mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
-        <div className='flex flex-col justify-start'>
-          <div className="flex  sm:items-center justify-between">
+        <div className='flex flex-col justify-start '>
+          <div className="flex  sm:items-center justify-between items-center">
             <h2 className="text-gray-700 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
               <span className="md:hidden">Jackets</span>
               <span className="hidden md:inline"><span className=" ">Jackets</span></span>
             </h2>
-            <Link href="/list?cat=featured-products" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</Link>
+            <Link 
+               href="/list?cat=featured-products"
+              className="flex items-center gap-1 bg-primary/10 hover:bg-primary/20 text-primary font-medium px-4 py-2 rounded-full transition-all duration-200 text-[14px]"
+            >
+              View All
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </Link>
           </div>
         </div>
         <Suspense fallback={<Skeleton />}>
@@ -111,12 +138,21 @@ const HomePage = async () => {
       {/* Mugs Jackets */}
       <div className="mt-[50px] md:mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
         <div className='flex flex-col justify-start'>
-          <div className="flex  sm:items-center justify-between">
+          <div className="flex  sm:items-center justify-between items-center">
             <h2 className="text-gray-700 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
               <span className="md:hidden">Mugs</span>
               <span className="hidden md:inline"><span className=" ">Mugs</span></span>
             </h2>
-            <Link href="/list?cat=category1" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</Link>
+            <Link 
+              href="/list?cat=category1"
+              className="flex items-center gap-1 bg-primary/10 hover:bg-primary/20 text-primary font-medium px-4 py-2 rounded-full transition-all duration-200 text-[14px]"
+            >
+              View All
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </Link>
           </div>
         </div>
         <Suspense fallback={<Skeleton />}>
@@ -130,12 +166,21 @@ const HomePage = async () => {
         {/* Notebooks Jackets */}
         <div className="mt-[50px] md:mt-24 px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
         <div className='flex flex-col justify-start'>
-          <div className="flex  sm:items-center justify-between">
+          <div className="flex  sm:items-center justify-between items-center">
             <h2 className="text-gray-700 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
               <span className="md:hidden">Notebooks</span>
               <span className="hidden md:inline"><span className=" ">Notebooks</span></span>
             </h2>
-            <Link href="/list?cat=notebooks" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</Link>
+            <Link 
+              href="/list?cat=notebooks"
+              className="flex items-center gap-1 bg-primary/10 hover:bg-primary/20 text-primary font-medium px-4 py-2 rounded-full transition-all duration-200 text-[14px]"
+            >
+              View All
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-1">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </Link>
           </div>
         </div>
         <Suspense fallback={<Skeleton />}>
