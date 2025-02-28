@@ -55,7 +55,7 @@ const HomePage = async () => {
           <div className="flex  sm:items-center justify-between">
             <h2 className="text-gray-500 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
               <span className="md:hidden">T-shirts</span>
-              <span className="hidden md:inline">Faith-Inspired <span className="text-primary font-bold">Shirts</span> for Every Believer</span>
+              <span className="hidden md:inline"><span className=" font-bold">Shirts</span></span>
             </h2>
             <a href="#" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</a>
           </div>
@@ -74,7 +74,7 @@ const HomePage = async () => {
           <div className="flex  sm:items-center justify-between">
             <h2 className="text-gray-500 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
               <span className="md:hidden">Hoodies</span>
-              <span className="hidden md:inline">Faith-Inspired <span className="text-primary">Hoodies</span> for Every Believer</span>
+              <span className="hidden md:inline">  <span className=" font-bold">Hoodies</span> </span>
             </h2>
             <a href="#" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</a>
           </div>
@@ -93,7 +93,7 @@ const HomePage = async () => {
           <div className="flex  sm:items-center justify-between">
             <h2 className="text-gray-500 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
               <span className="md:hidden">Jackets</span>
-              <span className="hidden md:inline">Faith-Inspired <span className="text-primary">Jackets</span> for Every Believer</span>
+              <span className="hidden md:inline"><span className=" font-bold">Jackets</span></span>
             </h2>
             <a href="#" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</a>
           </div>
@@ -114,7 +114,7 @@ const HomePage = async () => {
           <div className="flex  sm:items-center justify-between">
             <h2 className="text-gray-500 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
               <span className="md:hidden">Mugs</span>
-              <span className="hidden md:inline">Faith-Inspired <span className="text-primary">Mugs</span> for Every Believer</span>
+              <span className="hidden md:inline"><span className=" font-bold">Mugs</span></span>
             </h2>
             <a href="#" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</a>
           </div>
@@ -133,7 +133,7 @@ const HomePage = async () => {
           <div className="flex  sm:items-center justify-between">
             <h2 className="text-gray-500 font-medium mb-[5px] md:mb-[20px] text-[20px] md:text-[25px]">
               <span className="md:hidden">Notebooks</span>
-              <span className="hidden md:inline">Faith-Inspired <span className="text-primary">Notebooks</span> for Every Believer</span>
+              <span className="hidden md:inline"><span className=" font-bold">Notebooks</span></span>
             </h2>
             <a href="#" className="text-primary font-medium hover:underline text-sm sm:text-base transition-colors duration-200 mb-4 sm:mb-0">View All</a>
           </div>
