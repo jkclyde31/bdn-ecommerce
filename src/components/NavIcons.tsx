@@ -28,7 +28,7 @@ const NavIcons = () => {
 
   const login = async () => {
     const loginRequestData = wixClient.auth.generateOAuthData(
-      "https://bdn-commerce.vercel.app/"
+      "https://bdn-commerce.vercel.app"
     );
 
     console.log(loginRequestData);
