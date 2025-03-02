@@ -123,10 +123,10 @@ const NavIcons = () => {
             returnedOAuthData.state,
             parsedOAuthData
           );
-          // wixClient.updateTokens({
-          //   refreshToken: memberTokens.refreshToken,
-          //   accessToken: memberTokens.accessToken,
-          // });
+          wixClient.updateTokens({
+            refreshToken: memberTokens.refreshToken,
+            accessToken: memberTokens.accessToken,
+          });
 
           // Fetch user data after successful authentication
           const response = await fetch('/api/user');
