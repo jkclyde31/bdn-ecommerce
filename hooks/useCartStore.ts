@@ -2,8 +2,6 @@ import { create } from "zustand";
 import { currentCart } from "@wix/ecom";
 import { WixClient } from "@/context/wixContext";
 
-
-// State Management type
 type CartState = {
   cart: currentCart.Cart;
   isLoading: boolean;
@@ -18,7 +16,6 @@ type CartState = {
   removeItem: (wixClient: WixClient, itemId: string) => void;
 };
 
-// State Management
 export const useCartStore = create<CartState>((set) => ({
   cart: [],
   isLoading: true,
