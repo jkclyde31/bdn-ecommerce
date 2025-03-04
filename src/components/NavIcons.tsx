@@ -27,7 +27,8 @@ interface UserData {
 const NavIcons = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [userData, setUserData] = useState<UserData | null>(null);
   const [profilePicture, setProfilePicture] = useState("/profile.png");
@@ -55,6 +56,7 @@ const NavIcons = () => {
       console.error("Error fetching user data:", error);
     } finally {
       setIsLoading(false);
+      setIsInitialLoadComplete(true);
     }
   };
 
@@ -133,24 +135,49 @@ const NavIcons = () => {
     router.push(logoutUrl);
   };
 
-  // Loading Spinner Component
-  const LoadingSpinner = () => (
-    <div className="flex items-center justify-center">
-      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+  // Detailed Loading Animation Component
+  const LoadingAnimation = () => (
+    <div className="flex items-center justify-center space-x-2 animate-pulse">
+      <div className="w-3 h-3 bg-gray-300 rounded-full"></div>
+      <div className="w-3 h-3 bg-gray-300 rounded-full animation-delay-200"></div>
+      <div className="w-3 h-3 bg-gray-300 rounded-full animation-delay-400"></div>
     </div>
   );
 
-  return (
-    <div className="flex items-center gap-4 xl:gap-6 relative">
-      {/* Login/Signup or Profile Icon */}
-      {!userData ? (
+  // Placeholder Shimmer Loading State
+  const LoadingPlaceholder = () => (
+    <div className="flex items-center gap-3 relative">
+      <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
+      <div className="flex flex-col space-y-2">
+        <div className="h-4 w-24 bg-gray-200 rounded animate-pulse"></div>
+        <div className="h-3 w-16 bg-gray-200 rounded animate-pulse"></div>
+      </div>
+    </div>
+  );
+
+  // Get user's display name
+  const getUserDisplayName = () => {
+    const profile = userData?.member?.profile;
+    return profile?.nickname || profile?.name || "User";
+  };
+
+  // Determine what to render based on loading state and user data
+  const renderAuthComponent = () => {
+    // Show loading placeholder during initial load
+    if (!isInitialLoadComplete) {
+      return <LoadingPlaceholder />;
+    }
+
+    // Show login button if no user data
+    if (!userData) {
+      return (
         <button 
           onClick={login} 
           disabled={isAuthenticating}
           className={`px-4 py-2 bg-primary text-white rounded-full hover:bg-primary-dark transition-colors duration-300 ease-in-out flex items-center gap-2 shadow-md ${isAuthenticating ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           {isAuthenticating ? (
-            <LoadingSpinner />
+            <LoadingAnimation />
           ) : (
             <>
               <svg 
@@ -172,10 +199,15 @@ const NavIcons = () => {
             </>
           )}
         </button>
-      ) : (
-        <>
+      );
+    }
+
+    // Show user profile when data is available
+    return (
+      <div className="flex items-center gap-3">
+        <div className="relative flex items-center gap-2" onClick={() => setIsProfileOpen((prev) => !prev)}>
           {isLoading ? (
-            <LoadingSpinner />
+            <LoadingAnimation />
           ) : (
             <Image
               src={profilePicture}
@@ -183,10 +215,11 @@ const NavIcons = () => {
               width={26}
               height={26}
               className="cursor-pointer rounded-full"
-              onClick={login}
             />
           )}
-          {/* Profile Dropdown */}
+          <span className="text-sm font-medium cursor-pointer">
+            {getUserDisplayName()}
+          </span>
           {isProfileOpen && (
             <ProfileDropdown
               isProfileOpen={isProfileOpen}
@@ -196,8 +229,15 @@ const NavIcons = () => {
               onClose={() => setIsProfileOpen(false)}
             />
           )}
-        </>
-      )}
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className="flex items-center gap-4 xl:gap-6 relative">
+      {/* Login/Signup or Profile Icon */}
+      {renderAuthComponent()}
 
       {/* Cart Icon */}
       <div

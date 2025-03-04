@@ -1,93 +1,141 @@
-import React, { useEffect, useRef } from 'react';
-import Link from 'next/link';
-import { User, UserCircle, LogOut } from 'lucide-react';
+import Link from "next/link";
+import { 
+  LogOut, 
+  User, 
+  ShoppingBag, 
+  Heart, 
+  Settings, 
+  HelpCircle 
+} from "lucide-react";
 
-interface UserProfile {
+interface MemberProfile {
   nickname?: string;
   name?: string;
-}
-
-interface Member {
-  profile?: UserProfile;
+  photo?: {
+    url?: string;
+  };
 }
 
 interface UserData {
-  member?: Member;
+  member?: {
+    profile?: MemberProfile;
+  };
 }
 
 interface ProfileDropdownProps {
   isProfileOpen: boolean;
-  userData?: UserData | null;
-  handleLogout: () => void;
+  userData: UserData | null;
+  handleLogout: () => Promise<void>;
   isLoading: boolean;
-  onClose: () => void;  // New prop for handling close
+  onClose: () => void;
 }
 
-const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ 
-  isProfileOpen, 
-  userData, 
-  handleLogout, 
+const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
+  isProfileOpen,
+  userData,
+  handleLogout,
   isLoading,
-  onClose 
+  onClose
 }) => {
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        onClose();
-      }
-    };
-
-    // Only add the event listener if the dropdown is open
-    if (isProfileOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+  const menuItems = [
+    { 
+      icon: <User className="mr-2 h-4 w-4" />, 
+      label: "Profile", 
+      href: "/profile",
+      disabled: false
+    },
+    { 
+      icon: <ShoppingBag className="mr-2 h-4 w-4" />, 
+      label: "My Orders", 
+      href: "/orders",
+      disabled: false
+    },
+    { 
+      icon: <Heart className="mr-2 h-4 w-4" />, 
+      label: "Wishlist", 
+      href: "/wishlist",
+      disabled: false
+    },
+    { 
+      icon: <Settings className="mr-2 h-4 w-4" />, 
+      label: "Settings", 
+      href: "/settings",
+      disabled: false
+    },
+    { 
+      icon: <HelpCircle className="mr-2 h-4 w-4" />, 
+      label: "Help", 
+      href: "/help",
+      disabled: false
     }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isProfileOpen, onClose]);
-
-  if (!isProfileOpen) return null;
+  ];
 
   return (
     <div 
-      ref={dropdownRef}
-      className="absolute min-w-[200px] p-4 rounded-lg top-12 -right-9 md:left-0 bg-white shadow-lg z-20 border border-gray-100"
+      className="absolute right-0 top-full mt-2 w-64 bg-white shadow-lg rounded-lg border border-gray-100 z-50 overflow-hidden animate-dropdown-slide-down origin-top-right"
+      onClick={(e) => e.stopPropagation()}
     >
-      <div className="space-y-3">
-        {/* User Info */}
-        <div className="flex items-center gap-2 pb-3 border-b border-gray-100">
-          <User className="w-5 h-5 text-gray-500" />
-          <span className="text-sm font-medium text-gray-700">
-            {userData ? (
-              userData.member?.profile?.nickname || 
-              userData.member?.profile?.name || 
-              'User'
-            ) : (
-              'Guest'
-            )}
-          </span>
+      {/* User Header */}
+      <div className="flex items-center p-4 border-b border-gray-100 bg-gray-50">
+        <img 
+          src={userData?.member?.profile?.photo?.url || "/profile.png"}
+          alt="Profile"
+          className="w-12 h-12 rounded-full mr-4 object-cover border-2 border-primary/20 shadow-sm"
+        />
+        <div>
+          <p className="font-bold text-lg text-gray-800 leading-tight">
+            {userData?.member?.profile?.nickname || "User"}
+          </p>
+          <p className="text-sm text-gray-500 truncate max-w-[180px]">
+            {userData?.member?.profile?.name || "Welcome back"}
+          </p>
         </div>
+      </div>
 
-        {/* Profile Link */}
-        <Link 
-          href="/profile" 
-          className="flex items-center gap-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md transition-colors"
-        >
-          <UserCircle className="w-5 h-5" />
-          <span>Profile</span>
-        </Link>
+      {/* Menu Items */}
+      <div className="py-2">
+        {menuItems.map((item, index) => (
+          <Link 
+            key={index} 
+            href={item.href}
+            className={`
+              flex items-center px-4 py-2.5 text-sm text-gray-700 
+              hover:bg-gray-100 transition-colors duration-200 
+              ${item.disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-primary/5'}
+            `}
+            onClick={item.disabled ? (e) => e.preventDefault() : onClose}
+          >
+            {item.icon}
+            <span className="flex-grow">{item.label}</span>
+            {item.disabled && (
+              <span className="text-xs text-gray-400 ml-2">Coming Soon</span>
+            )}
+          </Link>
+        ))}
+      </div>
 
-        {/* Logout Button */}
-        <button
+      {/* Logout Button */}
+      <div className="border-t border-gray-100">
+        <button 
           onClick={handleLogout}
           disabled={isLoading}
-          className="flex items-center gap-2 text-sm text-gray-700 hover:text-gray-900 hover:bg-gray-50 p-2 rounded-md transition-colors w-full"
+          className="
+            w-full flex items-center justify-center 
+            px-4 py-3 text-sm 
+            text-red-600 hover:bg-red-50 
+            transition-colors duration-200 
+            disabled:opacity-50 
+            group
+          "
         >
-          <LogOut className="w-5 h-5" />
-          <span>{isLoading ? "Logging out..." : "Logout"}</span>
+          {isLoading ? (
+            <div className="animate-spin h-4 w-4 border-b-2 border-red-600 rounded-full"></div>
+          ) : (
+            <>
+              <LogOut className="mr-2 h-4 w-4 group-hover:rotate-180 transition-transform duration-300" />
+              Sign Out
+            </>
+          )}
         </button>
       </div>
     </div>
