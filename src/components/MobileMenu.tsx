@@ -29,7 +29,8 @@ const MobileMenu = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [profilePicture, setProfilePicture] = useState("/profile.png");
   const [isLoading, setIsLoading] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false); // Controls cart modal visibility
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -48,10 +49,65 @@ const MobileMenu = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Fetch user data function
+  const fetchUserData = async () => {
+    try {
+      setIsLoading(true);
+      const response = await fetch('/api/users');
+      const data = await response.json();
+      
+      if (data?.user) {
+        setUserData(data.user);
+        if (data.user?.member?.profile?.photo?.url) {
+          setProfilePicture(data.user.member.profile.photo.url);
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Authentication and user data fetching
+  useEffect(() => {
+    // Initial fetch
+    fetchUserData();
+    
+    // Check if this is a redirect from OAuth login
+    const checkOAuthRedirect = async () => {
+      const oAuthData = localStorage.getItem("oAuthRedirectData");
+      
+      if (oAuthData && wixClient?.auth?.loggedIn) {
+        try {
+          setIsAuthenticating(true);
+          const isLoggedIn = wixClient.auth.loggedIn();
+          
+          if (isLoggedIn) {
+            // Clear the OAuth data
+            localStorage.removeItem("oAuthRedirectData");
+            // Fetch user data again
+            await fetchUserData();
+          }
+        } catch (error) {
+          console.error("Error checking login status:", error);
+        } finally {
+          setIsAuthenticating(false);
+        }
+      }
+    };
+    
+    // Wait for wixClient to be ready before checking
+    if (wixClient) {
+      checkOAuthRedirect();
+    }
+  }, [wixClient]);
+
   const login = async () => {
     if (!wixClient.auth.loggedIn()) {
+      setIsAuthenticating(true);
       const loginRequestData = wixClient.auth.generateOAuthData(
-        "https://bdn-commerce.vercel.app"
+        process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
       );
       localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData));
       const { authUrl } = await wixClient.auth.getAuthUrl(loginRequestData);
@@ -77,51 +133,12 @@ const MobileMenu = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await fetch('/api/users');
-        const data = await response.json();
-        
-        if (data?.user) {
-          setUserData(data.user);
-          if (data.user?.member?.profile?.photo?.url) {
-            setProfilePicture(data.user.member.profile.photo.url);
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-  
-    // Initial fetch
-    fetchUser();
-    
-    // Check if this is a redirect from OAuth login
-    const checkOAuthRedirect = () => {
-      const oAuthData = localStorage.getItem("oAuthRedirectData");
-      // Safely check if wixClient and auth are available
-      if (oAuthData && wixClient?.auth?.loggedIn && typeof wixClient.auth.loggedIn === 'function') {
-        try {
-          const isLoggedIn = wixClient.auth.loggedIn();
-          if (isLoggedIn) {
-            // Clear the OAuth data
-            localStorage.removeItem("oAuthRedirectData");
-            // Fetch user data again
-            fetchUser();
-          }
-        } catch (error) {
-          console.error("Error checking login status:", error);
-        }
-      }
-    };
-    
-    // Wait for wixClient to be ready before checking
-    if (wixClient) {
-      checkOAuthRedirect();
-    }
-    
-  }, [wixClient]);
+  // Loading Spinner Component
+  const LoadingSpinner = () => (
+    <div className="flex items-center justify-center">
+      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-black"></div>
+    </div>
+  );
 
   return (
     <div className="px-4 relative h-full flex items-center justify-between md:hidden">
@@ -131,42 +148,44 @@ const MobileMenu = () => {
 
       <div className="flex items-center gap-3">
         <div className="relative" ref={dropdownRef}>
-          <Image
-            src={profilePicture}
-            alt="Profile"
-            width={27}
-            height={27}
-            className={`cursor-pointer rounded-full transition-transform duration-200 ${
-              isProfileOpen ? 'ring-2 ring-blue-500 ring-offset-2' : ''
-            }`}
-            onClick={login}
-          />
+          {isLoading || isAuthenticating ? (
+            <LoadingSpinner />
+          ) : (
+            <Image
+              src={profilePicture}
+              alt="Profile"
+              width={27}
+              height={27}
+              className={`cursor-pointer rounded-full transition-transform duration-200 ${
+                isProfileOpen ? 'ring-2 ring-blue-500 ring-offset-2' : ''
+              } ${isAuthenticating ? 'opacity-50' : ''}`}
+              onClick={login}
+            />
+          )}
 
           {isProfileOpen && (
             <ProfileDropdown
-                isProfileOpen={isProfileOpen}
-                userData={userData}
-                handleLogout={handleLogout}
-                isLoading={isLoading}
-                onClose={() => setIsProfileOpen(false)}
-      
-              />
+              isProfileOpen={isProfileOpen}
+              userData={userData}
+              handleLogout={handleLogout}
+              isLoading={isLoading}
+              onClose={() => setIsProfileOpen(false)}
+            />
           )}
         </div>
 
         <div
-            className="relative cursor-pointer"
-             onClick={() => setIsCartOpen((prev) => !prev)}
+          className="relative cursor-pointer"
+          onClick={() => setIsCartOpen((prev) => !prev)}
         >
-            <Image src="/cart.png" alt="Cart" width={22} height={22} />
-            <div className="absolute -top-2 -right-2 w-3 h-3 bg-lama rounded-full text-white text-sm flex items-center justify-center"></div>
+          <Image src="/cart.png" alt="Cart" width={22} height={22} />
+          <div className="absolute -top-2 -right-2 w-3 h-3 bg-lama rounded-full text-white text-sm flex items-center justify-center"></div>
         </div>
 
-        
-      {/* Cart Modal */}
-      {isCartOpen && <CartModal 
-        isOpen={isCartOpen} 
-        onClose={() => setIsCartOpen(false)} 
+        {/* Cart Modal */}
+        {isCartOpen && <CartModal 
+          isOpen={isCartOpen} 
+          onClose={() => setIsCartOpen(false)} 
         />}
 
         <Menu />
