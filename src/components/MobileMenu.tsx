@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useWixClient } from "../../hooks/useWixClient";
 import CartModal from "./CartModal";
 import ProfileDropdown from "./ProfileDropdown";
+import { useCartStore } from "../../hooks/useCartStore";
 
 interface MemberProfile {
   nickname?: string;
@@ -28,7 +29,8 @@ const MobileMenu = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [userData, setUserData] = useState<UserData | null>(null);
   const [profilePicture, setProfilePicture] = useState("/profile.png");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoadComplete, setIsInitialLoadComplete] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -36,6 +38,7 @@ const MobileMenu = () => {
 
   const wixClient = useWixClient();
   const router = useRouter();
+  const { counter } = useCartStore();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -66,6 +69,7 @@ const MobileMenu = () => {
       console.error("Error fetching user data:", error);
     } finally {
       setIsLoading(false);
+      setIsInitialLoadComplete(true);
     }
   };
 
@@ -107,7 +111,7 @@ const MobileMenu = () => {
     if (!wixClient.auth.loggedIn()) {
       setIsAuthenticating(true);
       const loginRequestData = wixClient.auth.generateOAuthData(
-        process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
+        process.env.NEXT_PUBLIC_APP_URL 
       );
       localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData));
       const { authUrl } = await wixClient.auth.getAuthUrl(loginRequestData);
@@ -133,12 +137,62 @@ const MobileMenu = () => {
     }
   };
 
-  // Loading Spinner Component
-  const LoadingSpinner = () => (
-    <div className="flex items-center justify-center">
-      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-black"></div>
+  // Detailed Loading Animation Component
+  const LoadingAnimation = () => (
+    <div className="flex items-center justify-center space-x-1 animate-pulse">
+      <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+      <div className="w-2 h-2 bg-gray-300 rounded-full animation-delay-200"></div>
+      <div className="w-2 h-2 bg-gray-300 rounded-full animation-delay-400"></div>
     </div>
   );
+
+  // Placeholder Shimmer Loading State
+  const LoadingPlaceholder = () => (
+    <div className="flex items-center gap-2">
+      <div className="w-7 h-7 bg-gray-200 rounded-full animate-pulse"></div>
+      <div className="flex flex-col space-y-1">
+        <div className="h-3 w-16 bg-gray-200 rounded animate-pulse"></div>
+      </div>
+    </div>
+  );
+
+  // Render profile component based on loading and authentication state
+  const renderProfileComponent = () => {
+    // Show loading placeholder during initial load
+    if (!isInitialLoadComplete) {
+      return <LoadingPlaceholder />;
+    }
+
+    // Show profile image or login prompt
+    if (!userData) {
+      return (
+        <Image
+          src={profilePicture}
+          alt="Profile"
+          width={27}
+          height={27}
+          className={`cursor-pointer rounded-full transition-transform duration-200 ${
+            isAuthenticating ? 'opacity-50' : ''
+          }`}
+          onClick={login}
+        />
+      );
+    }
+
+    // Logged-in user state
+    return (
+      <Image
+        src={profilePicture}
+        alt="Profile"
+        width={27}
+        height={27}
+        className={`cursor-pointer rounded-full transition-transform duration-200 ${
+          isProfileOpen ? 'ring-2 ring-blue-500 ring-offset-2' : ''
+        } ${isAuthenticating ? 'opacity-50' : ''}`}
+        onClick={() => setIsProfileOpen((prev) => !prev)}
+      />
+    );
+  };
 
   return (
     <div className="px-4 relative h-full flex items-center justify-between md:hidden">
@@ -148,22 +202,13 @@ const MobileMenu = () => {
 
       <div className="flex items-center gap-3">
         <div className="relative" ref={dropdownRef}>
-          {isLoading || isAuthenticating ? (
-            <LoadingSpinner />
+          {(isLoading || isAuthenticating) ? (
+            <LoadingAnimation />
           ) : (
-            <Image
-              src={profilePicture}
-              alt="Profile"
-              width={27}
-              height={27}
-              className={`cursor-pointer rounded-full transition-transform duration-200 ${
-                isProfileOpen ? 'ring-2 ring-blue-500 ring-offset-2' : ''
-              } ${isAuthenticating ? 'opacity-50' : ''}`}
-              onClick={login}
-            />
+            renderProfileComponent()
           )}
 
-          {isProfileOpen && (
+          {isProfileOpen && userData && (
             <ProfileDropdown
               isProfileOpen={isProfileOpen}
               userData={userData}
@@ -179,7 +224,11 @@ const MobileMenu = () => {
           onClick={() => setIsCartOpen((prev) => !prev)}
         >
           <Image src="/cart.png" alt="Cart" width={22} height={22} />
-          <div className="absolute -top-2 -right-2 w-3 h-3 bg-lama rounded-full text-white text-sm flex items-center justify-center"></div>
+          {counter > 0 && (
+            <div className="absolute -top-2 -right-2 w-4 h-4 bg-lama rounded-full text-white text-xs flex items-center justify-center">
+              {counter}
+            </div>
+          )}
         </div>
 
         {/* Cart Modal */}

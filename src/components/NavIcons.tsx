@@ -114,7 +114,7 @@ const NavIcons = () => {
     if (!wixClient.auth.loggedIn()) {
       setIsAuthenticating(true);
       const loginRequestData = wixClient.auth.generateOAuthData(
-        process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
+        process.env.NEXT_PUBLIC_APP_URL 
       );
       localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData));
       const { authUrl } = await wixClient.auth.getAuthUrl(loginRequestData);

@@ -7,7 +7,7 @@ import Hero from "@/components/Banner";
 
 
 export const metadata: Metadata = {
-  title: "BDN",
+  title: "BDN Shop",
   description: "A complete e-commerce application with Next.js and Wix",
 };
 
