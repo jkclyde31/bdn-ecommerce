@@ -41,7 +41,7 @@ const Navbar = () => {
         </div>
         {/* RIGHT */}
         <div className="w-2/3 xl:w-1/2 flex items-center justify-end gap-8">
-          <SearchBar />
+          {/* <SearchBar /> */}
           <NavIcons />
         </div>
       </div>
