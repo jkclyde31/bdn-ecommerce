@@ -30,7 +30,7 @@ export const WixClientContextProvider = ({
         redirects,
       },
       auth: OAuthStrategy({
-        clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID!,
+        clientId: "54fa4da2-56c9-4c94-a648-595fb79febf2",
         tokens: {
           refreshToken,
           accessToken: { value: "", expiresAt: 0 },

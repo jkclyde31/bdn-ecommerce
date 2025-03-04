@@ -19,10 +19,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-quicksand">
-      <Navbar/>
+  
 
         <WixClientContextProvider>
-
+        <Navbar/>
            {children}
           <Footer/>
         </WixClientContextProvider>
