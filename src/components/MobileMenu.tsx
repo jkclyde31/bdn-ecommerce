@@ -53,8 +53,8 @@ const MobileMenu = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Fetch user data function with retry logic
-  const fetchUserData = async (retryCount = 0, maxRetries = 3) => {
+  // Fetch user data function with retry logic and proper return type
+  const fetchUserData = async (retryCount = 0, maxRetries = 3): Promise<boolean> => {
     try {
       setIsLoading(true);
       const response = await fetch('/api/users');
@@ -91,7 +91,7 @@ const MobileMenu = () => {
   };
 
   // Check if we're returning from OAuth login
-  const isReturningFromOAuth = () => {
+  const isReturningFromOAuth = (): boolean => {
     return Boolean(localStorage.getItem("oAuthRedirectData"));
   };
 
@@ -99,7 +99,7 @@ const MobileMenu = () => {
   useEffect(() => {
     if (!wixClient) return;
 
-    const init = async () => {
+    const init = async (): Promise<void> => {
       // If returning from OAuth, attempt to process tokens and update login state
       if (isReturningFromOAuth()) {
         setIsAuthenticating(true);
@@ -193,7 +193,7 @@ const MobileMenu = () => {
     };
   }, [wixClient]);
 
-  const login = async () => {
+  const login = async (): Promise<void> => {
     if (!wixClient || isAuthenticating) return;
 
     try {
@@ -222,7 +222,7 @@ const MobileMenu = () => {
     }
   };
 
-  const handleLogout = async () => {
+  const handleLogout = async (): Promise<void> => {
     try {
       setIsLoading(true);
       Cookies.remove("refreshToken");
