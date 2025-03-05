@@ -75,37 +75,42 @@ const MobileMenu = () => {
 
   // Authentication and user data fetching
   useEffect(() => {
-    // Initial fetch
-    fetchUserData();
-    
-    // Check if this is a redirect from OAuth login
-    const checkOAuthRedirect = async () => {
-      const oAuthData = localStorage.getItem("oAuthRedirectData");
+    const handleOAuthRedirect = async () => {
+      const oAuthData = sessionStorage.getItem("oAuthRedirectData");
       
-      if (oAuthData && wixClient?.auth?.loggedIn) {
+      if (oAuthData) {
         try {
           setIsAuthenticating(true);
-          const isLoggedIn = wixClient.auth.loggedIn();
           
-          if (isLoggedIn) {
+          // Ensure wixClient is ready and logged in
+          await new Promise(resolve => setTimeout(resolve, 500)); // Small delay
+          
+          if (wixClient?.auth?.loggedIn()) {
             // Clear the OAuth data
-            localStorage.removeItem("oAuthRedirectData");
-            // Fetch user data again
+            sessionStorage.removeItem("oAuthRedirectData");
+            
+            // Fetch user data
             await fetchUserData();
+            
+            // Optional: Use router to programmatically navigate if needed
+            router.refresh(); // Next.js 13+ method to refresh the current route
           }
         } catch (error) {
-          console.error("Error checking login status:", error);
+          console.error("Error handling OAuth redirect:", error);
         } finally {
           setIsAuthenticating(false);
         }
       }
     };
+
+    // Initial fetch
+    fetchUserData();
     
-    // Wait for wixClient to be ready before checking
+    // Check for OAuth redirect on component mount and when wixClient is ready
     if (wixClient) {
-      checkOAuthRedirect();
+      handleOAuthRedirect();
     }
-  }, [wixClient]);
+  }, [wixClient, router]);
 
   const login = async () => {
     if (!wixClient.auth.loggedIn()) {
@@ -113,7 +118,10 @@ const MobileMenu = () => {
       const loginRequestData = wixClient.auth.generateOAuthData(
         process.env.NEXT_PUBLIC_APP_URL 
       );
-      localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData));
+      
+      // Use sessionStorage instead of localStorage
+      sessionStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData));
+      
       const { authUrl } = await wixClient.auth.getAuthUrl(loginRequestData);
       window.location.href = authUrl;
     } else {
