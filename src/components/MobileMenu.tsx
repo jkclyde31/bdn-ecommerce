@@ -201,15 +201,11 @@ const MobileMenu = () => {
       if (!isUserLoggedIn) {
         setIsAuthenticating(true);
         
-        // Add a timestamp to ensure uniqueness in redirect URL
-        const timestamp = new Date().getTime();
-        const redirectUrl = `${process.env.NEXT_PUBLIC_APP_URL}?auth=true&ts=${timestamp}`;
+        // Use the exact redirect URI that's configured in your OAuth app settings
+        const redirectUrl = process.env.NEXT_PUBLIC_APP_URL;
         
         const loginRequestData = wixClient.auth.generateOAuthData(redirectUrl);
         localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData));
-        
-        // Set a flag that auth is in progress
-        localStorage.setItem("authInProgress", "true");
         
         const { authUrl } = await wixClient.auth.getAuthUrl(loginRequestData);
         window.location.href = authUrl;
