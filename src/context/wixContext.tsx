@@ -6,6 +6,7 @@ import { currentCart } from "@wix/ecom";
 import Cookies from "js-cookie";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { redirects } from '@wix/redirects';
+import {items} from '@wix/data';
 
 export type WixClient = ReturnType<typeof createClient>;
 
@@ -28,6 +29,7 @@ export const WixClientContextProvider = ({
         collections,
         currentCart,
         redirects,
+        items
       },
       auth: OAuthStrategy({
         clientId: "54fa4da2-56c9-4c94-a648-595fb79febf2",
