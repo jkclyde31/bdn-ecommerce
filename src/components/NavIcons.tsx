@@ -123,6 +123,53 @@ const NavIcons = () => {
       setIsProfileOpen((prev) => !prev);
     }
   };
+  
+  // Modify the OAuth callback effect to explicitly refresh cart
+  useEffect(() => {
+    const handleOAuthCallback = async () => {
+      const oAuthRedirectData = localStorage.getItem("oAuthRedirectData");
+  
+      if (oAuthRedirectData) {
+        setIsAuthenticating(true);
+        const parsedOAuthData = JSON.parse(oAuthRedirectData);
+        const returnedOAuthData = wixClient.auth.parseFromUrl();
+  
+        if (returnedOAuthData.error) {
+          console.error(`OAuth Error: ${returnedOAuthData.errorDescription}`);
+          setIsAuthenticating(false);
+          return;
+        }
+  
+        try {
+          const memberTokens = await wixClient.auth.getMemberTokens(
+            returnedOAuthData.code,
+            returnedOAuthData.state,
+            parsedOAuthData
+          );
+  
+          wixClient.updateTokens({
+            refreshToken: memberTokens.refreshToken,
+            accessToken: memberTokens.accessToken,
+          });
+  
+          // Remove redirect data after successful authentication
+          localStorage.removeItem("oAuthRedirectData");
+  
+          // Refetch user data and explicitly refresh cart
+          await Promise.all([
+            fetchUserData(),
+            getCart(wixClient)  // Explicitly refresh cart here
+          ]);
+        } catch (error) {
+          console.error("Authentication failed:", error);
+        } finally {
+          setIsAuthenticating(false);
+        }
+      }
+    };
+  
+    handleOAuthCallback();
+  }, [wixClient, getCart]);  // Add getCart to dependencies
 
   const handleLogout = async () => {
     setIsLoading(true);
