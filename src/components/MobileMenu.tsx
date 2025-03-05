@@ -33,9 +33,9 @@ const MobileMenu = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const authCheckIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const wixClient = useWixClient();
   const router = useRouter();
@@ -53,22 +53,8 @@ const MobileMenu = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Check login status
-  const checkLoginStatus = async () => {
-    if (!wixClient) return false;
-    
-    try {
-      const loggedIn = await wixClient.auth.loggedIn();
-      setIsLoggedIn(loggedIn);
-      return loggedIn;
-    } catch (error) {
-      console.error("Error checking login status:", error);
-      return false;
-    }
-  };
-
-  // Fetch user data function
-  const fetchUserData = async () => {
+  // Fetch user data function with retry logic
+  const fetchUserData = async (retryCount = 0, maxRetries = 3) => {
     try {
       setIsLoading(true);
       const response = await fetch('/api/users');
@@ -80,137 +66,155 @@ const MobileMenu = () => {
           setProfilePicture(data.user.member.profile.photo.url);
         }
         return true;
+      } else if (retryCount < maxRetries) {
+        // If no user data but we're within retry count, wait and try again
+        console.log(`No user data found, retrying (${retryCount + 1}/${maxRetries})...`);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        return fetchUserData(retryCount + 1, maxRetries);
       }
       return false;
     } catch (error) {
       console.error("Error fetching user data:", error);
-      return false;
-    } finally {
-      setIsLoading(false);
-      setIsInitialLoadComplete(true);
-    }
-  };
-
-  // Process OAuth redirect tokens
-  const processOAuthTokens = async () => {
-    if (!wixClient) return false;
-    
-    try {
-      // Check if URL contains authentication tokens
-      if (window.location.hash.includes('access_token') || 
-          window.location.search.includes('code=')) {
-        await wixClient.auth.processIncomingOAuthToken();
-        
-        // Clear the URL without refreshing the page
-        const cleanUrl = window.location.pathname;
-        window.history.replaceState({}, document.title, cleanUrl);
-        
-        return true;
+      if (retryCount < maxRetries) {
+        // If error but we're within retry count, wait and try again
+        console.log(`Error fetching user data, retrying (${retryCount + 1}/${maxRetries})...`);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        return fetchUserData(retryCount + 1, maxRetries);
       }
       return false;
-    } catch (error) {
-      console.error("Error processing OAuth tokens:", error);
-      return false;
-    }
-  };
-
-  // Handle OAuth redirect
-  const handleOAuthRedirect = async () => {
-    const oAuthData = localStorage.getItem("oAuthRedirectData");
-    
-    if (!oAuthData) return;
-    
-    try {
-      setIsAuthenticating(true);
-      
-      // Process any tokens in the URL
-      const tokensProcessed = await processOAuthTokens();
-      
-      // Check login status after processing tokens
-      const isUserLoggedIn = await checkLoginStatus();
-      
-      if (isUserLoggedIn) {
-        // Clear the OAuth data
-        localStorage.removeItem("oAuthRedirectData");
-        
-        // Fetch user data
-        await fetchUserData();
-      }
-    } catch (error) {
-      console.error("Error handling OAuth redirect:", error);
     } finally {
-      setIsAuthenticating(false);
-    }
-  };
-
-  // Authentication and user data initialization
-  useEffect(() => {
-    if (!wixClient) return;
-    
-    const initAuth = async () => {
-      setIsLoading(true);
-      
-      try {
-        // First process any tokens in URL if this is a redirect
-        await processOAuthTokens();
-        
-        // Then check login status
-        const loggedIn = await checkLoginStatus();
-        
-        // If logged in, fetch user data
-        if (loggedIn) {
-          await fetchUserData();
-        }
-        
-        // Handle OAuth redirect data if present
-        await handleOAuthRedirect();
-      } catch (error) {
-        console.error("Authentication initialization error:", error);
-      } finally {
+      if (retryCount === 0 || retryCount === maxRetries) {
         setIsLoading(false);
         setIsInitialLoadComplete(true);
       }
-    };
-    
-    initAuth();
-    
-    // Add listener for OAuth state changes via local storage
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === "oAuthComplete" && event.newValue === "true") {
-        // Remove the flag
-        localStorage.removeItem("oAuthComplete");
+    }
+  };
+
+  // Check if we're returning from OAuth login
+  const isReturningFromOAuth = () => {
+    return Boolean(localStorage.getItem("oAuthRedirectData"));
+  };
+
+  // Authentication and user data fetching
+  useEffect(() => {
+    if (!wixClient) return;
+
+    const init = async () => {
+      // If returning from OAuth, attempt to process tokens and update login state
+      if (isReturningFromOAuth()) {
+        setIsAuthenticating(true);
         
-        // Reinitialize auth
-        initAuth();
+        try {
+          // Give a bit of time for Wix client to initialize
+          await new Promise(resolve => setTimeout(resolve, 500));
+          
+          // Check if we need to process incoming tokens
+          if (window.location.hash.includes('access_token') || 
+              window.location.search.includes('code=')) {
+            try {
+              await wixClient.auth.processIncomingOAuthToken();
+              console.log("Successfully processed OAuth tokens");
+              
+              // Clean URL without refreshing
+              const cleanUrl = window.location.pathname;
+              window.history.replaceState({}, document.title, cleanUrl);
+            } catch (tokenError) {
+              console.error("Error processing OAuth tokens:", tokenError);
+            }
+          }
+          
+          // Start polling for login state
+          if (authCheckIntervalRef.current) {
+            clearInterval(authCheckIntervalRef.current);
+          }
+          
+          // Set interval to check login status repeatedly
+          authCheckIntervalRef.current = setInterval(async () => {
+            try {
+              const isLoggedIn = await wixClient.auth.loggedIn();
+              console.log("Login check:", isLoggedIn);
+              
+              if (isLoggedIn) {
+                // Stop polling once logged in
+                if (authCheckIntervalRef.current) {
+                  clearInterval(authCheckIntervalRef.current);
+                  authCheckIntervalRef.current = null;
+                }
+                
+                // Clear OAuth data
+                localStorage.removeItem("oAuthRedirectData");
+                
+                // Fetch user data with retry logic
+                await fetchUserData();
+                setIsAuthenticating(false);
+              }
+            } catch (checkError) {
+              console.error("Error checking login status:", checkError);
+            }
+          }, 1000); // Check every second
+          
+          // Set timeout to stop polling after 10 seconds to prevent endless polling
+          setTimeout(() => {
+            if (authCheckIntervalRef.current) {
+              clearInterval(authCheckIntervalRef.current);
+              authCheckIntervalRef.current = null;
+              setIsAuthenticating(false);
+              console.log("Stopped polling for login status after timeout");
+            }
+          }, 10000);
+        } catch (error) {
+          console.error("Error during OAuth handling:", error);
+          setIsAuthenticating(false);
+        }
+      } else {
+        // Normal initialization - just fetch user data if logged in
+        try {
+          const isLoggedIn = await wixClient.auth.loggedIn();
+          if (isLoggedIn) {
+            await fetchUserData();
+          }
+        } catch (error) {
+          console.error("Error during normal initialization:", error);
+        } finally {
+          setIsInitialLoadComplete(true);
+          setIsLoading(false);
+        }
       }
     };
-    
-    window.addEventListener('storage', handleStorageChange);
-    
+
+    init();
+
+    // Clean up interval on component unmount
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
+      if (authCheckIntervalRef.current) {
+        clearInterval(authCheckIntervalRef.current);
+        authCheckIntervalRef.current = null;
+      }
     };
   }, [wixClient]);
 
   const login = async () => {
-    if (!wixClient) return;
-    
+    if (!wixClient || isAuthenticating) return;
+
     try {
-      const isUserLoggedIn = await checkLoginStatus();
+      const isLoggedIn = await wixClient.auth.loggedIn();
       
-      if (!isUserLoggedIn) {
+      if (!isLoggedIn) {
         setIsAuthenticating(true);
         
-        // Use the exact redirect URI that's configured in your OAuth app settings
-        const redirectUrl = process.env.NEXT_PUBLIC_APP_URL;
+        // Generate OAuth data with current URL as redirect
+        const loginRequestData = wixClient.auth.generateOAuthData(
+          window.location.origin + window.location.pathname
+        );
         
-        const loginRequestData = wixClient.auth.generateOAuthData(redirectUrl);
+        // Store OAuth data for detection after redirect
         localStorage.setItem("oAuthRedirectData", JSON.stringify(loginRequestData));
         
+        // Get auth URL and redirect
         const { authUrl } = await wixClient.auth.getAuthUrl(loginRequestData);
         window.location.href = authUrl;
       } else {
-        setIsProfileOpen((prev) => !prev);
+        setIsProfileOpen(prev => !prev);
       }
     } catch (error) {
       console.error("Login error:", error);
@@ -219,20 +223,13 @@ const MobileMenu = () => {
   };
 
   const handleLogout = async () => {
-    if (!wixClient) return;
-    
     try {
       setIsLoading(true);
       Cookies.remove("refreshToken");
       const { logoutUrl } = await wixClient.auth.logout(window.location.href);
-      
-      // Reset state
       setIsProfileOpen(false);
       setUserData(null);
       setProfilePicture("/profile.png");
-      setIsLoggedIn(false);
-      
-      // Navigate to logout URL
       router.push(logoutUrl);
     } catch (error) {
       console.error("Logout error:", error);
@@ -241,7 +238,7 @@ const MobileMenu = () => {
     }
   };
 
-  // Loading Animation Component
+  // Detailed Loading Animation Component
   const LoadingAnimation = () => (
     <div className="flex items-center justify-center space-x-1 animate-pulse">
       <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
@@ -268,7 +265,7 @@ const MobileMenu = () => {
     }
 
     // Show profile image or login prompt
-    if (!isLoggedIn || !userData) {
+    if (!userData) {
       return (
         <Image
           src={profilePicture}
